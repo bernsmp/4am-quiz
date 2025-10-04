@@ -161,13 +161,13 @@ export default function QuizPage() {
     const profile = getProfile(seoScore, aeoScore);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen bg-[#e3ebf2]">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-2xl mx-auto">
-            <Card>
+            <Card className="border-[#88a9c3]/30">
               <CardHeader className="text-center">
-                <CardTitle className="text-3xl mb-4">Your Results</CardTitle>
-                <CardDescription className="text-lg">
+                <CardTitle className="text-3xl mb-4 text-[#2b4257]">Your Results</CardTitle>
+                <CardDescription className="text-lg text-[#345e7d]">
                   Based on your answers, here's your optimization profile:
                 </CardDescription>
               </CardHeader>
@@ -178,21 +178,21 @@ export default function QuizPage() {
                   </Badge>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h3 className="font-semibold text-lg mb-2">SEO Score</h3>
-                      <div className="text-3xl font-bold text-blue-600">{seoScore}%</div>
+                      <h3 className="font-semibold text-lg mb-2 text-[#2b4257]">SEO Score</h3>
+                      <div className="text-3xl font-bold text-[#6da7cc]">{seoScore}%</div>
                       <Progress value={seoScore} className="mt-2" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-lg mb-2">AEO Score</h3>
-                      <div className="text-3xl font-bold text-green-600">{aeoScore}%</div>
+                      <h3 className="font-semibold text-lg mb-2 text-[#2b4257]">AEO Score</h3>
+                      <div className="text-3xl font-bold text-[#86c444]">{aeoScore}%</div>
                       <Progress value={aeoScore} className="mt-2" />
                     </div>
                   </div>
                 </div>
 
                 <div className="text-center space-y-4">
-                  <h3 className="font-semibold text-xl">Profile Analysis</h3>
-                  <p className="text-gray-600 dark:text-gray-400">
+                  <h3 className="font-semibold text-xl text-[#2b4257]">Profile Analysis</h3>
+                  <p className="text-[#345e7d]">
                     {profile === "Google Winner" && "You dominate Google but ChatGPT has never heard of you. Your traditional SEO is strong, but you're invisible to AI systems."}
                     {profile === "AI Darling" && "ChatGPT loves you, but humans never click. You're being cited by AI but need better human engagement signals."}
                     {profile === "Balanced Operator" && "You're doing fine, but fine won't cut it by 2026. You need to dominate one platform before the shift accelerates."}
@@ -201,10 +201,10 @@ export default function QuizPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button onClick={() => router.push("/analysis")} className="text-lg px-8 py-4">
-                    Get Website Analysis
+                  <Button onClick={() => router.push(`/verify?quizSeo=${seoScore}&quizAeo=${aeoScore}`)} className="text-lg px-8 py-4 h-auto">
+                    Verify These Results With Your Actual Website
                   </Button>
-                  <Button variant="outline" onClick={() => window.location.reload()} className="text-lg px-8 py-4">
+                  <Button variant="outline" onClick={() => window.location.reload()} className="text-lg px-8 py-4 h-auto">
                     Retake Quiz
                   </Button>
                 </div>
@@ -220,35 +220,39 @@ export default function QuizPage() {
   const selectedAnswer = answers[question.id];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 py-16">
+    <div className="min-h-screen bg-[#e3ebf2]">
+      <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+              <span className="text-sm font-medium text-[#345e7d]">
                 Question {currentQuestion + 1} of {quizQuestions.length}
               </span>
-              <Badge variant="outline">{Math.round(progress)}% Complete</Badge>
+              <Badge className="bg-[#6da7cc] text-white border-0">{Math.floor(progress)}% Complete</Badge>
             </div>
             <Progress value={progress} className="mb-6" />
           </div>
 
-          <Card>
+          <Card className="border-[#88a9c3]/30 shadow-lg rounded-xl">
             <CardHeader>
-              <CardTitle className="text-xl md:text-2xl leading-relaxed">
+              <CardTitle className="text-2xl md:text-3xl font-semibold leading-relaxed text-[#2b4257]">
                 {question.question}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               {Object.entries(question.answers).map(([key, answer]) => (
                 <Button
                   key={key}
                   variant={selectedAnswer === key ? "default" : "outline"}
-                  className="w-full text-left justify-start h-auto p-4 whitespace-normal"
+                  className={`w-full text-left justify-start h-auto p-5 whitespace-normal transition-all duration-200 ${
+                    selectedAnswer === key
+                      ? "bg-[#86c444] text-white hover:bg-[#86c444] border-[#86c444] scale-[1.02] shadow-md"
+                      : "hover:bg-accent/10 hover:-translate-y-0.5 hover:border-[#88a9c3] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#6da7cc] focus-visible:ring-offset-2"
+                  }`}
                   onClick={() => handleAnswerSelect(question.id, key)}
                 >
                   <div className="flex items-start space-x-3">
-                    <span className="font-bold text-lg min-w-[2rem]">{key.toUpperCase()}.</span>
+                    <span className="font-bold text-lg min-w-[2rem] tracking-wide">{key.toUpperCase()}.</span>
                     <span className="text-sm md:text-base">{answer.text}</span>
                   </div>
                 </Button>

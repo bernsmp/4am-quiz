@@ -1,94 +1,177 @@
-# Quiz Page Implementation Plan
+# AEO Strategist Branding Update Plan
 
 ## Overview
-Set up the quiz page that was pasted into the chat. The file needs to be properly saved and verified.
+Update all branding to match AEO Strategist brand, using design inspiration from Socially Square reference site and provided brand colors.
+
+## Brand Analysis
+
+### Reference Site (sociallysquare.com)
+- Clean, professional design with dark blue hero section
+- White form overlay on hero
+- Simple, readable typography
+- Trust-building content structure
+- Clear CTAs
+- Professional footer with contact info
+
+### Brand Colors Provided
+- **#88a9c3** - Dusty Blue (light/mid tone)
+- **#345e7d** - Darker Blue (primary dark)
+- **#e3ebf2** - Off White (backgrounds)
+- **#2b4257** - Darkest Blue (text/headers)
+- **#6da7cc** - Sky Blue (accents)
+- **#86c444** - Bright Green (CTAs/highlights)
+
+### Logos Available
+- Social Squared logo (chat bubble icon + text)
+- AEO Strategist logo (text with target icon)
 
 ## Tasks
 
-### 1. Save the quiz page component
-- [ ] Create/save src/app/quiz/page.tsx with the quiz component code
-- [ ] Verify all required UI components are available (button, card, progress, badge)
-- [ ] Check imports and component dependencies
+### 1. Analyze current branding
+- [ ] Review current color scheme in tailwind.config.ts
+- [ ] Review current components and color usage
+- [ ] Identify all pages needing updates
 
-### 2. Test the implementation
-- [ ] Run the development server
-- [ ] Navigate to /quiz route
-- [ ] Verify the quiz loads without errors
-- [ ] Test quiz functionality (answering questions, navigation, results)
+### 2. Create Brand Guide Document
+- [ ] Define primary, secondary, accent colors
+- [ ] Define typography hierarchy
+- [ ] Define button styles
+- [ ] Define card/component styles
+- [ ] Define spacing and layout patterns
+- [ ] Create color usage guidelines
 
-### 3. Security & quality checks
-- [ ] Verify no hardcoded secrets or API keys
-- [ ] Check that routing to /analysis page works
-- [ ] Ensure responsive design works on mobile
+### 3. Update Tailwind Configuration
+- [ ] Replace color palette in tailwind.config.ts
+- [ ] Map brand colors to semantic names
+- [ ] Test color combinations for accessibility
 
-## Notes
-- All required shadcn/ui components appear to be installed (badge, button, card, progress)
-- The quiz uses client-side state management (no backend needed)
-- Routes to /analysis page after completion
+### 4. Update Components
+- [ ] Update Button component variants
+- [ ] Update Card component styles
+- [ ] Update form input styles
+- [ ] Update typography components
 
-## Completed Tasks
-- [x] Create/save src/app/quiz/page.tsx with the quiz component code
-- [x] Verify all required UI components are available (button, card, progress, badge)
-- [x] Check imports and component dependencies
-- [x] Run the development server
-- [x] Navigate to /quiz route
-- [x] Verify the quiz loads without errors
-- [x] Verify no hardcoded secrets or API keys
-- [x] Check that routing to /analysis page works
-- [x] Ensure responsive design works on mobile
+### 5. Update All Pages
+- [ ] Landing page (/)
+- [ ] Quiz page (/quiz)
+- [ ] Verify page (/verify)
+- [ ] Analyzing page (/analyzing)
+- [ ] Gap Analysis page (/gap-analysis)
 
-## Review
+### 6. Testing & Review
+- [ ] Visual review with Playwright
+- [ ] Test all pages on desktop/tablet/mobile
+- [ ] Check color contrast for accessibility
+- [ ] Verify brand consistency across all pages
 
-### Summary of Changes
-- Replaced quiz questions in `src/app/quiz/page.tsx` with new personality-driven questions
-- Updated quiz from generic SEO/AEO questions to more engaging "party personality" style questions
-- Changed scoring logic to use percentages instead of raw scores
-- Updated profile analysis descriptions with more direct, punchy language
+## Recommendations Needed
+- Primary color usage strategy
+- CTA button color (likely bright green #86c444)
+- Background color strategy
+- Text color hierarchy
+- When to use each blue variant
 
-### New Questions Added
-1. "If your content was a person at a party..."
-2. "When someone wants to verify you're credible..."
-3. "Your content structure is mostly..."
-4. "In the last 30 days, how many people have said 'I found you on Google'?"
-5. "If I visit your site and click 'View Page Source'..."
-6. "When you publish content, you..."
-7. "If I look at your article's code, would I find special tags..."
-8. "How do you prove your expertise?"
+## Next Steps
+- [x] Present brand guide and recommendations to user
+- [x] Get approval on plan
+- [ ] Begin implementation
 
-### Technical Details
-- All required shadcn/ui components already installed (no new dependencies)
-- Quiz uses client-side React state management
-- Routes to `/analysis` page after completion
-- Retake quiz functionality uses `window.location.reload()`
-- Dev server running on http://localhost:3006
+---
 
-### Dependencies
-No new dependencies added - all components were already in the project:
-- @radix-ui/react-progress
-- @radix-ui/react-slot
-- lucide-react
-- next
-- react
+# Quiz Page Premium Design Enhancement Plan
 
-### Environment Variables
-No environment variables needed - all logic is client-side.
+## Design Review Summary
+The quiz page uses correct brand colors but lacks polish and premium feel. Primary issue: button interactions are nearly invisible (borders disappear on click with no compensating feedback). The design is too flat with no depth, weak typography hierarchy, and missing micro-interactions.
 
-### Security
-- ✅ No API keys or secrets in code
-- ✅ No sensitive data exposure
-- ✅ All calculations happen client-side
-- ✅ Proper routing with Next.js useRouter
+## Critical Fixes (High Priority)
 
-### Known Limitations & Future Improvements
-- Quiz results are not persisted (no database/localStorage)
-- No analytics tracking on quiz completions
-- Could add email capture before showing results
-- Could add social sharing of results
-- "Retake Quiz" uses full page reload instead of state reset
+### 1. Fix Button Selection State
+**Problem**: Selected buttons only lose their border - users can't tell what's selected
+**Solution**:
+- Background changes to green (#86c444) with white text when selected
+- Add subtle scale transform (scale-[1.02]) for lift effect
+- Smooth transition (200ms)
+- Optional: checkmark icon
 
-### Testing
-- ✅ Dev server starts successfully
-- ✅ All imports resolve correctly
-- ✅ /analysis page exists and is accessible
-- ✅ No TypeScript errors
-- ✅ No build errors
+### 2. Add Hover State Feedback
+**Problem**: Hovering produces no visible change
+**Solution**:
+- Light background tint on hover (bg-accent/10)
+- Border color intensification
+- Subtle lift effect (translateY(-2px))
+- 200ms transition
+
+### 3. Add Active/Press State
+**Problem**: No tactile feedback when clicking
+**Solution**:
+- Brief scale-down (scale-[0.98]) on click
+- Faster transition (100ms)
+
+### 4. Enhance Card Depth
+**Problem**: Card is flat with no visual hierarchy
+**Solution**:
+- Add shadow-lg for elevation
+- Increase border radius to rounded-xl
+- Consider subtle gradient overlay
+
+### 5. Improve Typography Hierarchy
+**Problem**: Question text is undersized (20-24px vs brand guide 28-32px)
+**Solution**:
+- Increase to text-2xl md:text-3xl
+- Add font-semibold
+- Increase line-height to leading-relaxed
+
+## Medium Priority Enhancements
+
+### 6. Improve Spacing & Breathing Room
+**Current**: 16px between buttons
+**Target**: 24px (space-y-6)
+**Also**: Increase button internal padding to p-5 or p-6
+
+### 7. Enhance Progress Bar
+**Current**: Static blue bar
+**Target**:
+- Gradient from sky blue to green
+- Subtle shine animation on updates
+- Slightly increased height
+
+### 8. Optimize Navigation Buttons
+**Current**: Disabled state too subtle
+**Target**: Make disabled state more obvious, strengthen primary vs secondary distinction
+
+### 9. Mobile Spacing Optimization
+**Current**: Adequate but cramped
+**Target**: More generous spacing on mobile for touch targets
+
+## Polish Details (Low Priority)
+
+### 10. Add Focus States
+**Issue**: Missing keyboard navigation feedback (accessibility)
+**Solution**: Add focus-visible rings
+
+### 11. Letter Spacing on Labels
+**Enhancement**: Add slight tracking to A., B., C., D. labels
+
+### 12. Badge Styling
+**Current**: Outline variant
+**Target**: Filled badge with sky blue background
+
+## Implementation Checklist
+- [ ] Update button component with selection, hover, and active states
+- [ ] Increase question typography size and weight
+- [ ] Add card shadows and enhanced border radius
+- [ ] Improve button spacing (space-y-6)
+- [ ] Add gradient progress bar
+- [ ] Enhance button padding
+- [ ] Add focus-visible states for accessibility
+- [ ] Optimize mobile spacing
+- [ ] Test all interactions
+- [ ] Review on desktop, tablet, and mobile
+
+## Expected Outcome
+Transform from "bland wireframe" to "premium experience" with:
+- Unmistakable interaction feedback
+- Visual depth through shadows and layering
+- Smooth micro-interactions
+- Professional typography hierarchy
+- Polished, confident feel throughout
