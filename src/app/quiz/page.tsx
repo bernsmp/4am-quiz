@@ -168,7 +168,7 @@ export default function QuizPage() {
               <CardHeader className="text-center">
                 <CardTitle className="text-3xl mb-4 text-[#2b4257]">Your Results</CardTitle>
                 <CardDescription className="text-lg text-[#345e7d]">
-                  Based on your answers, here's your optimization profile:
+                  Based on your answers, here&apos;s your optimization profile:
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">

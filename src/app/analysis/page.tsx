@@ -13,7 +13,19 @@ export default function AnalysisPage() {
   const [url, setUrl] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
-  const [analysisResults, setAnalysisResults] = useState<any>(null);
+  const [analysisResults, setAnalysisResults] = useState<{
+    url: string;
+    seo_score: number;
+    aeo_score: number;
+    schema_markup: boolean;
+    meta_tags: boolean;
+    headings_structure: boolean;
+    content_quality: number;
+    technical_issues: number;
+    mobile_friendly: boolean;
+    page_speed: number;
+    recommendations: string[];
+  } | null>(null);
   const router = useRouter();
 
   const handleAnalyze = async () => {
@@ -26,6 +38,7 @@ export default function AnalysisPage() {
       const mockResults = {
         url: url,
         seo_score: Math.floor(Math.random() * 40) + 30, // 30-70 range
+        aeo_score: Math.floor(Math.random() * 40) + 30, // 30-70 range
         schema_markup: Math.random() > 0.5,
         meta_tags: Math.random() > 0.3,
         headings_structure: Math.random() > 0.4,
@@ -56,7 +69,7 @@ export default function AnalysisPage() {
 
   if (analysisComplete && analysisResults) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen bg-[#e3ebf2]">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto">
             <Card>
@@ -66,7 +79,7 @@ export default function AnalysisPage() {
                   Analysis Complete
                 </CardTitle>
                 <CardDescription className="text-lg">
-                  Here's what we found for: <strong>{analysisResults.url}</strong>
+                  Here&apos;s what we found for: <strong>{analysisResults.url}</strong>
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-8">
@@ -178,7 +191,7 @@ export default function AnalysisPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-[#e3ebf2]">
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto">
           <Card>
@@ -209,7 +222,7 @@ export default function AnalysisPage() {
                   </div>
 
                   <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                    <h3 className="font-semibold mb-2">What we'll analyze:</h3>
+                    <h3 className="font-semibold mb-2">What we&apos;ll analyze:</h3>
                     <ul className="text-sm space-y-1 text-gray-600 dark:text-gray-400">
                       <li>• SEO optimization and meta tags</li>
                       <li>• Content structure and quality</li>

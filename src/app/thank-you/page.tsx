@@ -1,21 +1,20 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Mail, Share2, Download } from "lucide-react";
 
 export default function ThankYouPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-[#e3ebf2]">
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto text-center">
           <div className="mb-8">
-            <CheckCircle className="w-20 h-20 text-green-600 mx-auto mb-4" />
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <CheckCircle className="w-20 h-20 text-[#86c444] mx-auto mb-4" />
+            <h1 className="text-4xl md:text-5xl font-bold text-[#2b4257] mb-4">
               Thank You!
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              Your 4AM Test analysis is complete. Here's what happens next:
+              Your 4AM Test analysis is complete. Here&apos;s what happens next:
             </p>
           </div>
 
@@ -23,7 +22,7 @@ export default function ThankYouPage() {
             <CardHeader>
               <CardTitle className="text-2xl">Your Results Summary</CardTitle>
               <CardDescription className="text-lg">
-                We've sent a detailed report to your email with personalized recommendations
+                We&apos;ve sent a detailed report to your email with personalized recommendations
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -70,8 +69,8 @@ export default function ThankYouPage() {
 
           <div className="space-y-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                What's Your Next Step?
+              <h2 className="text-2xl font-bold text-[#2b4257] mb-4">
+                What&apos;s Your Next Step?
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-6">
                 Based on your results, here are some recommended actions:

@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-[#e3ebf2]">
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#2b4257] mb-6">
               About THE 4AM TEST
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-[#345e7d] max-w-2xl mx-auto">
               Understanding the gap between perception and reality in website optimization
             </p>
           </div>
@@ -44,7 +44,7 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#6da7cc] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                 1
               </div>
               <h3 className="font-semibold text-lg mb-2">Self-Assessment</h3>
@@ -53,7 +53,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#86c444] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                 2
               </div>
               <h3 className="font-semibold text-lg mb-2">Website Analysis</h3>
@@ -62,7 +62,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#345e7d] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                 3
               </div>
               <h3 className="font-semibold text-lg mb-2">Gap Analysis</h3>
@@ -73,11 +73,11 @@ export default function AboutPage() {
           </div>
 
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-3xl font-bold text-[#2b4257] mb-6">
               Ready to discover your optimization reality?
             </h2>
             <Link href="/quiz">
-              <Button size="lg" className="text-lg px-8 py-4">
+              <Button size="lg" className="text-lg px-8 py-4 h-auto">
                 Start THE 4AM TEST
               </Button>
             </Link>
