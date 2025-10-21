@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
+import Image from "next/image";
+import Link from "next/link";
 
 interface QuizQuestion {
   id: number;
@@ -161,38 +164,52 @@ export default function QuizPage() {
     const profile = getProfile(seoScore, aeoScore);
 
     return (
-      <div className="min-h-screen bg-[#e3ebf2]">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-2xl mx-auto">
-            <Card className="border-[#88a9c3]/30">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-white">
+        <div className="container mx-auto px-6 py-24">
+          {/* Logo */}
+          <div className="text-center mb-8">
+            <Link href="/">
+              <Image
+                src="/AEO Logo white.png"
+                alt="AEO Strategist"
+                width={300}
+                height={120}
+                className="mx-auto cursor-pointer"
+              />
+            </Link>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <Card className="p-12 rounded-2xl bg-white shadow-xl shadow-blue-900/10 border border-blue-100/50 ring-1 ring-gray-900/5">
               <CardHeader className="text-center">
-                <CardTitle className="text-3xl mb-4 text-[#2b4257]">Your Results</CardTitle>
-                <CardDescription className="text-lg text-[#345e7d]">
+                <CardTitle className="text-4xl md:text-5xl font-extrabold mb-6 text-[#2b4257] tracking-tight">
+                  Your Results
+                </CardTitle>
+                <CardDescription className="text-xl text-[#345e7d] leading-relaxed">
                   Based on your answers, here&apos;s your optimization profile:
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-8">
                 <div className="text-center">
-                  <Badge variant="secondary" className="text-lg px-4 py-2 mb-4">
+                  <Badge variant="secondary" className="text-xl px-6 py-3 mb-6 font-bold shadow-md">
                     {profile}
                   </Badge>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold text-lg mb-2 text-[#2b4257]">SEO Score</h3>
-                      <div className="text-3xl font-bold text-[#6da7cc]">{seoScore}%</div>
-                      <Progress value={seoScore} className="mt-2" />
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="p-6 rounded-xl bg-gradient-to-br from-blue-50 to-white border border-blue-100/50">
+                      <h3 className="font-bold text-xl mb-3 text-[#2b4257]">SEO Score</h3>
+                      <div className="text-5xl font-extrabold text-[#6da7cc] mb-3">{seoScore}%</div>
+                      <Progress value={seoScore} className="mt-3 h-3" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-2 text-[#2b4257]">AEO Score</h3>
-                      <div className="text-3xl font-bold text-[#86c444]">{aeoScore}%</div>
-                      <Progress value={aeoScore} className="mt-2" />
+                    <div className="p-6 rounded-xl bg-gradient-to-br from-green-50 to-white border border-green-100/50">
+                      <h3 className="font-bold text-xl mb-3 text-[#2b4257]">AEO Score</h3>
+                      <div className="text-5xl font-extrabold text-[#86c444] mb-3">{aeoScore}%</div>
+                      <Progress value={aeoScore} className="mt-3 h-3" />
                     </div>
                   </div>
                 </div>
 
-                <div className="text-center space-y-4">
-                  <h3 className="font-semibold text-xl text-[#2b4257]">Profile Analysis</h3>
-                  <p className="text-[#345e7d]">
+                <div className="text-center space-y-5 p-8 rounded-xl bg-gradient-to-b from-gray-50 to-white border border-gray-200/50">
+                  <h3 className="font-bold text-2xl text-[#2b4257]">Profile Analysis</h3>
+                  <p className="text-lg text-[#345e7d] leading-relaxed">
                     {profile === "Google Winner" && "You dominate Google but ChatGPT has never heard of you. Your traditional SEO is strong, but you're invisible to AI systems."}
                     {profile === "AI Darling" && "ChatGPT loves you, but humans never click. You're being cited by AI but need better human engagement signals."}
                     {profile === "Balanced Operator" && "You're doing fine, but fine won't cut it by 2026. You need to dominate one platform before the shift accelerates."}
@@ -200,13 +217,29 @@ export default function QuizPage() {
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button onClick={() => router.push(`/verify?quizSeo=${seoScore}&quizAeo=${aeoScore}`)} className="text-lg px-8 py-4 h-auto">
-                    Verify These Results With Your Actual Website
-                  </Button>
-                  <Button variant="outline" onClick={() => window.location.reload()} className="text-lg px-8 py-4 h-auto">
-                    Retake Quiz
-                  </Button>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center pt-6">
+                  <ShimmerButton
+                    onClick={() => router.push(`/verify?quizSeo=${seoScore}&quizAeo=${aeoScore}`)}
+                    className="px-12 py-6 text-xl font-bold shadow-xl hover:shadow-green-500/30"
+                    shimmerColor="#ffffff"
+                    background="linear-gradient(to right, #86c444, #76b33d)"
+                    borderRadius="10px"
+                  >
+                    <span className="text-white">
+                      Verify These Results
+                    </span>
+                  </ShimmerButton>
+                  <ShimmerButton
+                    onClick={() => window.location.reload()}
+                    className="px-10 py-5 text-lg font-semibold border-2 border-[#88a9c3] shadow-md"
+                    shimmerColor="#6da7cc"
+                    background="rgba(255, 255, 255, 0.98)"
+                    borderRadius="10px"
+                  >
+                    <span className="text-[#2b4257]">
+                      Retake Quiz
+                    </span>
+                  </ShimmerButton>
                 </div>
               </CardContent>
             </Card>
@@ -220,58 +253,83 @@ export default function QuizPage() {
   const selectedAnswer = answers[question.id];
 
   return (
-    <div className="min-h-screen bg-[#e3ebf2]">
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="max-w-2xl mx-auto">
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-sm font-medium text-[#345e7d]">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+      <div className="container mx-auto px-6 py-20 md:py-24">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <Link href="/">
+            <Image
+              src="/AEO Logo white.png"
+              alt="AEO Strategist"
+              width={300}
+              height={120}
+              className="mx-auto cursor-pointer"
+            />
+          </Link>
+        </div>
+        <div className="max-w-3xl mx-auto">
+          <div className="mb-10">
+            <div className="flex justify-between items-center mb-5">
+              <span className="text-base md:text-lg font-semibold text-[#345e7d]">
                 Question {currentQuestion + 1} of {quizQuestions.length}
               </span>
-              <Badge className="bg-[#6da7cc] text-white border-0">{Math.floor(progress)}% Complete</Badge>
+              <Badge className="bg-[#6da7cc] text-white border-0 text-base px-5 py-2 shadow-md">
+                {Math.floor(progress)}% Complete
+              </Badge>
             </div>
-            <Progress value={progress} className="mb-6" />
+            <Progress value={progress} className="mb-6 h-3 shadow-sm" />
           </div>
 
-          <Card className="border-[#88a9c3]/30 shadow-lg rounded-xl">
+          <Card className="p-12 rounded-2xl bg-white shadow-xl shadow-blue-900/10 border border-blue-100/50 ring-1 ring-gray-900/5">
             <CardHeader>
-              <CardTitle className="text-2xl md:text-3xl font-semibold leading-relaxed text-[#2b4257]">
+              <CardTitle className="text-3xl md:text-4xl font-bold leading-tight text-[#2b4257]">
                 {question.question}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-5 pt-6">
               {Object.entries(question.answers).map(([key, answer]) => (
                 <Button
                   key={key}
                   variant={selectedAnswer === key ? "default" : "outline"}
-                  className={`w-full text-left justify-start h-auto p-5 whitespace-normal transition-all duration-200 ${
+                  className={`w-full text-left justify-start h-auto p-6 whitespace-normal transition-all duration-200 text-base md:text-lg ${
                     selectedAnswer === key
-                      ? "bg-[#86c444] text-white hover:bg-[#86c444] border-[#86c444] scale-[1.02] shadow-md"
-                      : "hover:bg-accent/10 hover:-translate-y-0.5 hover:border-[#88a9c3] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#6da7cc] focus-visible:ring-offset-2"
+                      ? "bg-gradient-to-r from-[#86c444] to-[#76b33d] text-white hover:from-[#76b33d] hover:to-[#86c444] border-[#86c444] scale-[1.02] shadow-lg hover:shadow-xl hover:-translate-y-1"
+                      : "bg-white border-2 border-gray-200 hover:border-[#6da7cc] hover:-translate-y-1 hover:shadow-md active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-[#6da7cc] focus-visible:ring-offset-2"
                   }`}
                   onClick={() => handleAnswerSelect(question.id, key)}
                 >
-                  <div className="flex items-start space-x-3">
-                    <span className="font-bold text-lg min-w-[2rem] tracking-wide">{key.toUpperCase()}.</span>
-                    <span className="text-sm md:text-base">{answer.text}</span>
+                  <div className="flex items-start space-x-4">
+                    <span className="font-bold text-xl min-w-[2.5rem] tracking-wide">{key.toUpperCase()}.</span>
+                    <span className="text-base md:text-lg leading-relaxed">{answer.text}</span>
                   </div>
                 </Button>
               ))}
 
-              <div className="flex justify-between pt-6">
-                <Button
-                  variant="outline"
+              <div className="flex justify-between pt-8 gap-4">
+                <ShimmerButton
                   onClick={handlePrevious}
                   disabled={currentQuestion === 0}
+                  className="px-10 py-4 text-lg font-semibold border-2 border-[#88a9c3] shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  shimmerColor="#6da7cc"
+                  background="rgba(255, 255, 255, 0.98)"
+                  borderRadius="10px"
                 >
-                  Previous
-                </Button>
-                <Button
+                  <span className="text-[#2b4257]">
+                    Previous
+                  </span>
+                </ShimmerButton>
+                <ShimmerButton
                   onClick={handleNext}
                   disabled={!selectedAnswer}
+                  className="px-12 py-4 text-lg md:text-xl font-bold shadow-xl hover:shadow-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                  shimmerColor="#ffffff"
+                  background="linear-gradient(to right, #86c444, #76b33d)"
+                  borderRadius="10px"
                 >
-                  {currentQuestion === quizQuestions.length - 1 ? "View Results" : "Next"}
-                </Button>
+                  <span className="text-white">
+                    {currentQuestion === quizQuestions.length - 1 ? "View Results" : "Next Question"}
+                  </span>
+                </ShimmerButton>
               </div>
             </CardContent>
           </Card>
