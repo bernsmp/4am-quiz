@@ -5,24 +5,33 @@ import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import Link from "next/link";
+import { FloatingNav } from "@/components/ui/floating-navbar";
+import { Home as HomeIcon, Linkedin, Globe } from "lucide-react";
 
 export default function Home() {
+  const navItems = [
+    {
+      name: "Home",
+      link: "/",
+      icon: <HomeIcon className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "LinkedIn",
+      link: "https://www.linkedin.com/in/suziekane/",
+      icon: <Linkedin className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "Socially Square",
+      link: "https://sociallysquare.com/",
+      icon: <Globe className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+  ];
+
   return (
     <div className="min-h-screen">
+      <FloatingNav navItems={navItems} />
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#2b4257] via-[#345e7d] to-[#4a6f8f] px-6 py-20 md:py-32">
-        {/* Header Logo */}
-        <div className="container mx-auto max-w-7xl px-6 pt-6 pb-4">
-          <Link href="/">
-            <Image
-              src="/AEO Logo - 3.jpg"
-              alt="AEO Strategist"
-              width={200}
-              height={80}
-              className="cursor-pointer"
-            />
-          </Link>
-        </div>
         <div className="container mx-auto max-w-4xl text-center">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-10 leading-tight tracking-tight">
             Your Customers Didn&apos;t Disappear. They Just Can&apos;t Find You&nbsp;Anymore.{" "}
