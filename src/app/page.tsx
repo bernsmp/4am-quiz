@@ -1,6 +1,4 @@
-import { Button } from "@/components/catalyst/button";
 import { Heading } from "@/components/catalyst/heading";
-import { Text } from "@/components/catalyst/text";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
