@@ -1,0 +1,7 @@
+# Exclude demo and example folders from Vercel deployment
+catalyst-ui-kit/
+signal-noise-agents/
+4am-test-setup/
+.playwright-mcp/
+4 steps/
+logos/
