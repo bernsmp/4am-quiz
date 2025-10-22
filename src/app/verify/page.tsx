@@ -11,13 +11,21 @@ function VerifyPageContent() {
   const searchParams = useSearchParams()
   const quizSeoScore = searchParams.get('quizSeo') // Get SEO score
   const quizAeoScore = searchParams.get('quizAeo') // Get AEO score
+  const profileType = searchParams.get('profile') || 'Balanced Operator' // Get profile type
 
   const [url, setUrl] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Navigate to analyzing page with all data
-    router.push(`/analyzing?url=${encodeURIComponent(url)}&quizSeo=${quizSeoScore}&quizAeo=${quizAeoScore}`)
+
+    // Normalize URL - add https:// if missing
+    let normalizedUrl = url.trim()
+    if (!normalizedUrl.startsWith('http://') && !normalizedUrl.startsWith('https://')) {
+      normalizedUrl = 'https://' + normalizedUrl
+    }
+
+    // Navigate to analyzing page with all data including profile
+    router.push(`/analyzing?url=${encodeURIComponent(normalizedUrl)}&quizSeo=${quizSeoScore}&quizAeo=${quizAeoScore}&profile=${encodeURIComponent(profileType)}`)
   }
 
   return (
@@ -57,14 +65,17 @@ function VerifyPageContent() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <Input
-              type="url"
-              placeholder="https://yourwebsite.com"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              required
-              className="text-lg p-6 border-2 border-[#88a9c3]/50 rounded-xl focus:border-[#6da7cc] transition-colors"
-            />
+            <div className="space-y-2">
+              <Input
+                type="text"
+                placeholder="yourwebsite.com (no https:// needed)"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                required
+                className="text-lg p-6 border-2 border-[#88a9c3]/50 rounded-xl focus:border-[#6da7cc] transition-colors"
+              />
+              <p className="text-sm text-gray-500 text-center">Just enter your domain - we&apos;ll add the https:// automatically</p>
+            </div>
 
             <div className="flex justify-center">
               <ShimmerButton

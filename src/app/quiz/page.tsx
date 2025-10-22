@@ -219,7 +219,7 @@ export default function QuizPage() {
 
                 <div className="flex flex-col sm:flex-row gap-6 justify-center pt-6">
                   <ShimmerButton
-                    onClick={() => router.push(`/verify?quizSeo=${seoScore}&quizAeo=${aeoScore}`)}
+                    onClick={() => router.push(`/verify?quizSeo=${seoScore}&quizAeo=${aeoScore}&profile=${encodeURIComponent(profile)}`)}
                     className="px-12 py-6 text-xl font-bold shadow-xl hover:shadow-green-500/30"
                     shimmerColor="#ffffff"
                     background="linear-gradient(to right, #86c444, #76b33d)"
