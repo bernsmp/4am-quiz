@@ -171,6 +171,21 @@ export default function Home() {
               That&apos;s not a future problem. Zero-Click Search is happening RIGHT NOW — whether you realize it or not.
             </p>
           </div>
+
+          <div className="flex justify-center mt-12">
+            <Link href="/quiz">
+              <ShimmerButton
+                className="px-8 py-4 text-lg font-bold shadow-xl hover:shadow-green-500/30"
+                shimmerColor="#ffffff"
+                background="linear-gradient(to right, #86c444, #76b33d)"
+                borderRadius="10px"
+              >
+                <span className="text-white">
+                  TAKE THE QUIZ
+                </span>
+              </ShimmerButton>
+            </Link>
+          </div>
         </div>
       </div>
 
