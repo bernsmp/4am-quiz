@@ -25,9 +25,27 @@ export default function PartialGapPage() {
 
   const [report, setReport] = useState<Report | null>(null)
   const [loading, setLoading] = useState(true)
-  const [showEmailForm, setShowEmailForm] = useState(false)
-  const [email, setEmail] = useState('')
-  const [submitting, setSubmitting] = useState(false)
+
+  // Helper function to build GHL capture URL with all parameters
+  function buildGHLCaptureUrl(reportData: Report) {
+    const baseUrl = process.env.NEXT_PUBLIC_GHL_CAPTURE_PAGE_URL ||
+      'https://your-ghl-domain.com/aeo-quiz-capture'
+
+    const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard/${reportId}`
+
+    const params = new URLSearchParams({
+      reportId: reportId,
+      gap: reportData.total_gap.toString(),
+      seoScore: reportData.quiz_seo_score.toString(),
+      aeoScore: reportData.quiz_aeo_score.toString(),
+      gapType: reportData.gap_type,
+      profile: reportData.profile_type,
+      website: reportData.website_url,
+      reportUrl: dashboardUrl
+    })
+
+    return `${baseUrl}?${params.toString()}`
+  }
 
   useEffect(() => {
     fetchReport()
@@ -50,12 +68,12 @@ export default function PartialGapPage() {
     setLoading(false)
   }
 
-  async function handleEmailSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setSubmitting(true)
+  function handleUnlockAnalysis() {
+    if (!report) return
 
-    // Navigate to dashboard with email
-    router.push(`/dashboard/${reportId}?email=${encodeURIComponent(email)}`)
+    // Redirect to GHL capture page with all report data
+    const ghlUrl = buildGHLCaptureUrl(report)
+    window.location.href = ghlUrl
   }
 
   if (loading) {
@@ -78,7 +96,7 @@ export default function PartialGapPage() {
             Your SEO Reality Check
           </h1>
           <p className="text-xl text-[#345e7d]">
-            Here's what we found for <span className="font-semibold text-[#2b4257]">{report.website_url}</span>
+            Here&apos;s what we found for <span className="font-semibold text-[#2b4257]">{report.website_url}</span>
           </p>
         </div>
 
@@ -154,10 +172,10 @@ export default function PartialGapPage() {
                 See your complete analysis + exactly how to fix it
               </p>
               <button
-                onClick={() => setShowEmailForm(true)}
+                onClick={handleUnlockAnalysis}
                 className="bg-gradient-to-r from-[#86c444] to-[#76b33d] text-white px-10 py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 shadow-xl"
               >
-                Unlock Full Analysis
+                Unlock Full Analysis →
               </button>
             </div>
           </div>
@@ -207,67 +225,16 @@ export default function PartialGapPage() {
             </li>
             <li className="flex items-start">
               <span className="text-red-600 font-bold mr-3 text-2xl">•</span>
-              <span><strong className="text-[#2a4358]">Deals you don't even know you're missing</strong></span>
+              <span><strong className="text-[#2a4358]">Deals you don&apos;t even know you&apos;re missing</strong></span>
             </li>
           </ul>
           <div className="mt-8 pt-6 border-t-2 border-amber-200">
             <p className="text-xl font-bold text-[#2a4358] text-center">
-              And that's just SEO. Your AEO gap could be even worse. 🔒
+              And that&apos;s just SEO. Your AEO gap could be even worse. 🔒
             </p>
           </div>
         </div>
 
-        {/* Email Form (conditionally shown) */}
-        {showEmailForm && (
-          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-10 border-2 border-[#86c444]">
-            <h3 className="text-3xl font-bold text-[#2a4358] mb-6">
-              Get Your Complete Analysis
-            </h3>
-            <p className="text-lg text-[#345e7d] mb-6">
-              Enter your email to unlock:
-            </p>
-            <ul className="space-y-3 text-[#345e7d] mb-8">
-              <li className="flex items-start">
-                <Image src="/check.png" alt="Check" width={24} height={24} className="mr-3 mt-1" />
-                <span className="text-lg">Your full SEO + AEO gap analysis with exact scores</span>
-              </li>
-              <li className="flex items-start">
-                <Image src="/check.png" alt="Check" width={24} height={24} className="mr-3 mt-1" />
-                <span className="text-lg">Specific pages to update (prioritized by impact)</span>
-              </li>
-              <li className="flex items-start">
-                <Image src="/check.png" alt="Check" width={24} height={24} className="mr-3 mt-1" />
-                <span className="text-lg">Schema markup templates you can copy-paste</span>
-              </li>
-              <li className="flex items-start">
-                <Image src="/check.png" alt="Check" width={24} height={24} className="mr-3 mt-1" />
-                <span className="text-lg">30-day roadmap to close your gap</span>
-              </li>
-            </ul>
-
-            <form onSubmit={handleEmailSubmit} className="space-y-6">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                required
-                className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl text-lg focus:border-[#86c444] focus:outline-none focus:ring-2 focus:ring-[#86c444]/20 transition-all"
-              />
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full bg-gradient-to-r from-[#86c444] to-[#76b33d] text-white px-8 py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 shadow-xl disabled:opacity-50"
-              >
-                {submitting ? 'Unlocking...' : 'Unlock My Dashboard'}
-              </button>
-            </form>
-
-            <p className="text-sm text-gray-500 mt-6 text-center">
-              We respect your privacy. No spam, ever. 🔒
-            </p>
-          </div>
-        )}
 
       </div>
     </div>

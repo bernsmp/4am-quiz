@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams, useRouter } from 'next/navigation'
-import { supabase, supabaseAdmin } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 import Image from 'next/image'
 
 interface Report {
@@ -28,7 +28,6 @@ export default function DashboardPage() {
 
   const [report, setReport] = useState<Report | null>(null)
   const [loading, setLoading] = useState(true)
-  const [savingEmail, setSavingEmail] = useState(false)
 
   useEffect(() => {
     fetchReport()
@@ -50,10 +49,14 @@ export default function DashboardPage() {
     setReport(data)
     setLoading(false)
 
+    // NOTE: Email capture is now handled by GHL page redirect flow
+    // The old direct email capture code is commented out below
+    /*
     // If email is provided but not saved, save it
     if (emailParam && !data.email) {
       saveEmail(emailParam)
     }
+    */
 
     // Track dashboard view
     await supabase
@@ -65,6 +68,9 @@ export default function DashboardPage() {
       .eq('report_id', reportId)
   }
 
+  // NOTE: This function is preserved for future use if needed
+  // Currently, email capture is handled by GHL page redirect flow
+  /*
   async function saveEmail(email: string) {
     setSavingEmail(true)
 
@@ -107,6 +113,7 @@ export default function DashboardPage() {
       setSavingEmail(false)
     }
   }
+  */
 
   if (loading) {
     return (
@@ -255,11 +262,11 @@ export default function DashboardPage() {
             <ul className="space-y-4 text-lg text-[#345e7d]">
               <li className="flex items-start">
                 <span className="text-red-600 font-bold mr-3 text-2xl">•</span>
-                <span><strong className="text-[#2a4358]">SEO Gap of {report.seo_gap} points</strong> = You're invisible in searches you think you're showing up in</span>
+                <span><strong className="text-[#2a4358]">SEO Gap of {report.seo_gap} points</strong> = You&apos;re invisible in searches you think you&apos;re showing up in</span>
               </li>
               <li className="flex items-start">
                 <span className="text-red-600 font-bold mr-3 text-2xl">•</span>
-                <span><strong className="text-[#2a4358]">AEO Gap of {report.aeo_gap} points</strong> = AI tools aren't recommending you when asked</span>
+                <span><strong className="text-[#2a4358]">AEO Gap of {report.aeo_gap} points</strong> = AI tools aren&apos;t recommending you when asked</span>
               </li>
               <li className="flex items-start">
                 <span className="text-red-600 font-bold mr-3 text-2xl">•</span>
@@ -352,7 +359,7 @@ export default function DashboardPage() {
                 </li>
                 <li className="flex items-start">
                   <Image src="/check.png" alt="Check" width={20} height={20} className="mr-3 mt-1" />
-                  <span>Double down on what's working</span>
+                  <span>Double down on what&apos;s working</span>
                 </li>
               </ul>
             </div>
@@ -373,7 +380,7 @@ export default function DashboardPage() {
             rel="noopener noreferrer"
             className="inline-block bg-gradient-to-r from-[#86c444] to-[#76b33d] text-white px-12 py-5 rounded-xl font-bold text-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 shadow-xl"
           >
-            Let's Talk Strategy
+            Let&apos;s Talk Strategy
           </a>
         </div>
 
