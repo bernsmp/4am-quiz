@@ -377,7 +377,6 @@ export default function Home() {
               className="mx-auto"
             />
           </div>
-          <p className="text-white/80 text-lg mb-2">An offshoot of Socially Square</p>
           <p className="text-[#86c543] text-2xl font-bold tracking-wider">Right Angles for Marketing Success</p>
         </div>
       </div>
