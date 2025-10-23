@@ -52,20 +52,30 @@ export default function PartialGapPage() {
   }, [reportId])
 
   async function fetchReport() {
-    const { data, error } = await supabase
-      .from('reports')
-      .select('*')
-      .eq('report_id', reportId)
-      .single()
+    try {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('*')
+        .eq('report_id', reportId)
+        .single()
 
-    if (error || !data) {
-      console.error('Error fetching report:', error)
+      if (error || !data) {
+        // PGRST116 = not found, expected for invalid report IDs
+        if (error?.code !== 'PGRST116') {
+          console.warn('Unexpected error fetching report:', error)
+        }
+        setLoading(false)
+        router.push('/verify')
+        return
+      }
+
+      setReport(data)
+      setLoading(false)
+    } catch (err) {
+      console.warn('Exception fetching report:', err)
+      setLoading(false)
       router.push('/verify')
-      return
     }
-
-    setReport(data)
-    setLoading(false)
   }
 
   function handleUnlockAnalysis() {

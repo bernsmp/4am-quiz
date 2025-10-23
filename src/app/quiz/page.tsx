@@ -157,7 +157,7 @@ export default function QuizPage() {
     return "Invisible Expert";
   };
 
-  const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
+  const progress = (currentQuestion / quizQuestions.length) * 100;
 
   if (showResults) {
     const { seoScore, aeoScore } = calculateScores();

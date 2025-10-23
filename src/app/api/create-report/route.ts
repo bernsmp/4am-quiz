@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { nanoid } from 'nanoid'
+import { analyzeWebsite } from '@/services/analyzers'
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,9 +22,31 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Generate mock "actual" scores (30-70 range, different from quiz)
-    const actualSeoScore = Math.floor(Math.random() * 41) + 30 // 30-70
-    const actualAeoScore = Math.floor(Math.random() * 41) + 30 // 30-70
+    // Run REAL analysis using our analyzer system!
+    console.log('Starting real analysis for:', websiteUrl)
+
+    const analysisResult = await analyzeWebsite(
+      {
+        websiteUrl,
+        businessName: extractBusinessName(websiteUrl),
+        industry: 'services', // Could be passed from quiz if we add that question
+      },
+      {
+        enableOpenAI: !!process.env.OPENAI_API_KEY, // Only if API key is set
+        enablePageSpeed: true,
+        enablePremium: false, // Keep premium analyzers off for now
+        timeout: 45000 // 45 second timeout
+      }
+    )
+
+    console.log('Analysis complete:', {
+      seoScore: analysisResult.seoScore,
+      aeoScore: analysisResult.aeoScore
+    })
+
+    // Use the real analyzed scores
+    const actualSeoScore = analysisResult.seoScore
+    const actualAeoScore = analysisResult.aeoScore
 
     // Calculate gaps
     const seoGap = Math.abs(quizSeoScore - actualSeoScore)
@@ -40,7 +63,7 @@ export async function POST(request: NextRequest) {
     const reportId = nanoid(8)
 
     // Save to database
-    const { data, error } = await supabaseAdmin
+    const { data, error} = await supabaseAdmin
       .from('reports')
       .insert({
         report_id: reportId,
@@ -53,7 +76,8 @@ export async function POST(request: NextRequest) {
         aeo_gap: aeoGap,
         total_gap: totalGap,
         gap_type: gapType,
-        profile_type: profileType
+        profile_type: profileType,
+        analysis_details: analysisResult.rawResults // Store detailed analysis data
       })
       .select()
       .single()
@@ -79,5 +103,17 @@ export async function POST(request: NextRequest) {
       { error: 'Internal server error' },
       { status: 500 }
     )
+  }
+}
+
+// Helper function to extract business name from URL
+function extractBusinessName(url: string): string {
+  try {
+    const urlObj = new URL(url)
+    const domain = urlObj.hostname.replace(/^www\./, '')
+    const name = domain.split('.')[0]
+    return name.charAt(0).toUpperCase() + name.slice(1)
+  } catch {
+    return 'Business'
   }
 }
