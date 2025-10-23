@@ -34,7 +34,7 @@ export async function analyzeSchema(input: AnalysisInput): Promise<AEOAnalyzerRe
     const $ = cheerio.load(html)
 
     // Extract all JSON-LD schemas
-    const schemas: any[] = []
+    const schemas: Record<string, unknown>[] = []
     $('script[type="application/ld+json"]').each((i, elem) => {
       try {
         const content = $(elem).html()

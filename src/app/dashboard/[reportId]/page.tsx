@@ -36,7 +36,7 @@ interface Report {
   gap_type: string
   profile_type: string
   email: string | null
-  analysis_details?: any // Analysis data from our analyzer system
+  analysis_details?: Record<string, unknown> // Analysis data from our analyzer system
 }
 
 export default function DashboardPage() {
