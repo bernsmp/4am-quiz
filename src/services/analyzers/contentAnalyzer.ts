@@ -3,6 +3,7 @@
 
 import * as cheerio from 'cheerio'
 import type { AEOAnalyzerResult, AnalysisInput } from './types'
+import { validatePublicUrl } from '@/lib/security'
 
 interface ContentDetails {
   hasFAQSection: boolean
@@ -15,16 +16,32 @@ interface ContentDetails {
   hasContactInfo: boolean
   readabilityScore: number
   structureScore: number
+  [key: string]: unknown
 }
 
 export async function analyzeContent(input: AnalysisInput): Promise<AEOAnalyzerResult> {
   try {
+    // SSRF Protection - validate URL before fetching
+    const urlValidation = validatePublicUrl(input.websiteUrl)
+    if (!urlValidation.valid) {
+      return {
+        type: 'aeo',
+        score: 0,
+        details: { error: urlValidation.error || 'Invalid URL' },
+        enabled: true,
+        error: urlValidation.error || 'Invalid URL'
+      }
+    }
+
     const response = await fetch(input.websiteUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; AEO-Quiz-Bot/1.0)'
       },
-      signal: AbortSignal.timeout(10000)
-    })
+      signal: AbortSignal.timeout(10000),
+      redirect: 'follow',
+      // Security: limit redirect following
+      follow: 5
+    } as RequestInit)
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`)

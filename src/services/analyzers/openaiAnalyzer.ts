@@ -16,6 +16,7 @@ interface OpenAIDetails {
     snippet?: string
   }[]
   totalMentions: number
+  [key: string]: unknown
 }
 
 export async function analyzeWithOpenAI(input: AnalysisInput): Promise<AEOAnalyzerResult> {

@@ -2,22 +2,62 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { nanoid } from 'nanoid'
 import { analyzeWebsite } from '@/services/analyzers'
+import { createReportSchema, rateLimiter, RATE_LIMITS, getClientIp, validatePublicUrl } from '@/lib/security'
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const clientIp = getClientIp(request)
+    const rateLimit = rateLimiter.check(
+      `create-report:${clientIp}`,
+      RATE_LIMITS.createReport.limit,
+      RATE_LIMITS.createReport.window
+    )
+
+    if (!rateLimit.success) {
+      const resetDate = new Date(rateLimit.reset)
+      return NextResponse.json(
+        {
+          error: 'Too many requests. Please try again later.',
+          resetAt: resetDate.toISOString()
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': RATE_LIMITS.createReport.limit.toString(),
+            'X-RateLimit-Remaining': rateLimit.remaining.toString(),
+            'X-RateLimit-Reset': resetDate.toISOString()
+          }
+        }
+      )
+    }
+
     const body = await request.json()
+
+    // Validate input with Zod
+    const validation = createReportSchema.safeParse(body)
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: 'Invalid input',
+          details: validation.error.issues.map(e => ({ field: e.path.join('.'), message: e.message }))
+        },
+        { status: 400 }
+      )
+    }
 
     const {
       websiteUrl,
       quizSeoScore,
       quizAeoScore,
       profileType
-    } = body
+    } = validation.data
 
-    // Validate required fields
-    if (!websiteUrl || !quizSeoScore || !quizAeoScore || !profileType) {
+    // SSRF Protection - validate URL is public
+    const urlValidation = validatePublicUrl(websiteUrl)
+    if (!urlValidation.valid) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: urlValidation.error || 'Invalid URL' },
         { status: 400 }
       )
     }

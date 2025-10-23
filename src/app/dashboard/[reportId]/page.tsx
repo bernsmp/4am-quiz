@@ -49,6 +49,29 @@ interface AnalysisDetails {
     enabled?: boolean
     error?: string
   }
+  content?: {
+    score?: number
+    details?: {
+      hasFAQSection?: boolean
+      hasHeadings?: boolean
+      readabilityScore?: number
+      wordCount?: number
+      [key: string]: unknown
+    }
+    enabled?: boolean
+    error?: string
+  }
+  openai?: {
+    score?: number
+    details?: {
+      totalMentions?: number
+      queries?: unknown[]
+      positiveContext?: boolean
+      [key: string]: unknown
+    }
+    enabled?: boolean
+    error?: string
+  }
   [key: string]: unknown
 }
 

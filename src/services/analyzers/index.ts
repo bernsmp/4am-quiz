@@ -96,10 +96,13 @@ function calculateFinalScores(results: { [key: string]: AnalyzerResult }): Final
   Object.values(results).forEach(result => {
     if (!result || !result.enabled) return
 
-    if (result.type === 'seo') {
-      seoResults.push(result)
-    } else if (result.type === 'aeo') {
-      aeoResults.push(result)
+    // Type narrowing with type guard
+    if ('type' in result) {
+      if (result.type === 'seo') {
+        seoResults.push(result)
+      } else if (result.type === 'aeo') {
+        aeoResults.push(result)
+      }
     }
   })
 

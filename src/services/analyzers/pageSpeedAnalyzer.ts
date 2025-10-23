@@ -14,6 +14,7 @@ interface PageSpeedDetails {
   totalBlockingTime: number
   cumulativeLayoutShift: number
   timeToInteractive: number
+  [key: string]: unknown
 }
 
 export async function analyzePageSpeed(input: AnalysisInput): Promise<SEOAnalyzerResult> {

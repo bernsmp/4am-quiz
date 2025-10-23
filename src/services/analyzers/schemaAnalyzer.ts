@@ -15,6 +15,7 @@ interface SchemaDetails {
   hasProduct: boolean
   hasReview: boolean
   completenessScore: number
+  [key: string]: unknown
 }
 
 export async function analyzeSchema(input: AnalysisInput): Promise<AEOAnalyzerResult> {
@@ -78,11 +79,14 @@ export async function analyzeSchema(input: AnalysisInput): Promise<AEOAnalyzerRe
     let completenessTotal = 0
     let completenessCount = 0
     schemas.forEach(schema => {
-      const requiredFields = getRequiredFields(schema['@type'])
-      if (requiredFields.length > 0) {
-        const filledFields = requiredFields.filter(field => schema[field])
-        completenessTotal += (filledFields.length / requiredFields.length) * 100
-        completenessCount++
+      const schemaType = schema['@type']
+      if (typeof schemaType === 'string' || Array.isArray(schemaType)) {
+        const requiredFields = getRequiredFields(schemaType)
+        if (requiredFields.length > 0) {
+          const filledFields = requiredFields.filter(field => schema[field])
+          completenessTotal += (filledFields.length / requiredFields.length) * 100
+          completenessCount++
+        }
       }
     })
     details.completenessScore = completenessCount > 0

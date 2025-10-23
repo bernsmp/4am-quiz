@@ -1,8 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { captureEmailSchema, rateLimiter, RATE_LIMITS, getClientIp } from '@/lib/security'
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const clientIp = getClientIp(request)
+    const rateLimit = rateLimiter.check(
+      `capture-email:${clientIp}`,
+      RATE_LIMITS.captureEmail.limit,
+      RATE_LIMITS.captureEmail.window
+    )
+
+    if (!rateLimit.success) {
+      const resetDate = new Date(rateLimit.reset)
+      return NextResponse.json(
+        {
+          error: 'Too many requests. Please try again later.',
+          resetAt: resetDate.toISOString()
+        },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': RATE_LIMITS.captureEmail.limit.toString(),
+            'X-RateLimit-Remaining': rateLimit.remaining.toString(),
+            'X-RateLimit-Reset': resetDate.toISOString()
+          }
+        }
+      )
+    }
+
     const body = await request.json()
+
+    // Validate input with Zod
+    const validation = captureEmailSchema.safeParse(body)
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: 'Invalid input',
+          details: validation.error.issues.map(e => ({ field: e.path.join('.'), message: e.message }))
+        },
+        { status: 400 }
+      )
+    }
 
     const {
       email,
@@ -11,15 +50,7 @@ export async function POST(request: NextRequest) {
       seoGap,
       aeoGap,
       totalGap
-    } = body
-
-    // Validate required fields
-    if (!email || !reportId) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
-    }
+    } = validation.data
 
     // Send to GoHighLevel webhook
     const ghlWebhookUrl = process.env.GHL_WEBHOOK_URL
