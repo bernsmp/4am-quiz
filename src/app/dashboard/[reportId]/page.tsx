@@ -24,6 +24,34 @@ import {
   X
 } from 'lucide-react'
 
+interface AnalysisDetails {
+  schema?: {
+    score?: number
+    details?: {
+      hasOrganization?: boolean
+      hasFAQ?: boolean
+      hasLocalBusiness?: boolean
+      schemaCount?: number
+      [key: string]: unknown
+    }
+    enabled?: boolean
+    error?: string
+  }
+  pageSpeed?: {
+    score?: number
+    details?: {
+      performanceScore?: number
+      seoScore?: number
+      accessibilityScore?: number
+      bestPracticesScore?: number
+      [key: string]: unknown
+    }
+    enabled?: boolean
+    error?: string
+  }
+  [key: string]: unknown
+}
+
 interface Report {
   website_url: string
   quiz_seo_score: number
@@ -36,7 +64,7 @@ interface Report {
   gap_type: string
   profile_type: string
   email: string | null
-  analysis_details?: Record<string, unknown> // Analysis data from our analyzer system
+  analysis_details?: AnalysisDetails // Analysis data from our analyzer system
 }
 
 export default function DashboardPage() {
