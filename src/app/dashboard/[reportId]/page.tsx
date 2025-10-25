@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams, useRouter } from 'next/navigation'
+import Script from 'next/script'
+import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { motion, AnimatePresence } from 'framer-motion'
 import CountUp from 'react-countup'
@@ -23,6 +25,7 @@ import {
   Check,
   X
 } from 'lucide-react'
+import { DashboardHeader } from '@/components/ui/dashboard-header'
 
 interface AnalysisDetails {
   schema?: {
@@ -320,13 +323,15 @@ export default function DashboardPage() {
   ]
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12 px-4"
-    >
-      <div className="max-w-7xl mx-auto">
+    <>
+      <DashboardHeader />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12 px-4"
+      >
+        <div className="max-w-7xl mx-auto">
 
         {/* Hero Section with Circular Progress */}
         <motion.div
@@ -1020,6 +1025,40 @@ export default function DashboardPage() {
           </div>
         </motion.div>
 
+        {/* Calendar Booking Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <div className="bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/40 shadow-lg">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Book Your Free Strategy Session
+              </h2>
+              <p className="text-xl text-gray-600">
+                Let&apos;s close your {report.total_gap}-point gap together
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto bg-white rounded-lg p-4 border-2 border-[#86c444]/30">
+              <iframe
+                src="https://link.entrepreneurdreamplatform.com/widget/booking/2c4Zjv9T7Px0wdJv2c15"
+                style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '600px' }}
+                scrolling="no"
+                id="phaU8a50FBCF4zBgkCsc_1761260259300"
+                title="Book Strategy Session Calendar"
+              />
+              <Script
+                src="https://link.entrepreneurdreamplatform.com/js/form_embed.js"
+                strategy="lazyOnload"
+              />
+            </div>
+          </div>
+        </motion.div>
+
         {/* Enhanced CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1059,27 +1098,75 @@ export default function DashboardPage() {
           </div>
         </motion.div>
 
-      </div>
+        </div>
 
-      {/* Floating Action Button (Mobile) */}
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5 }}
-        className="fixed bottom-6 right-6 md:hidden z-50"
-      >
-        <motion.a
-          href="https://sociallysquare.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex items-center gap-2 bg-gradient-to-r from-[#3B82F6] to-[#2a4358] text-white px-6 py-4 rounded-full font-bold shadow-2xl"
+        {/* Footer Branding */}
+        <footer className="mt-16">
+          <div className="bg-[#2b4257] py-12 px-6">
+            <div className="max-w-7xl mx-auto text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="mb-6"
+              >
+                <Image
+                  src="/ss-logo-light.png"
+                  alt="Socially Square"
+                  width={200}
+                  height={80}
+                  className="mx-auto"
+                  priority
+                />
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-[#86c543] text-xl font-bold tracking-wide mb-6"
+              >
+                Socially Square | Right Angles for Marketing Success
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="flex justify-center gap-6 text-sm text-[#e3ebf2]"
+              >
+                <a href="https://sociallysquare.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  Visit Our Website
+                </a>
+                <a href="https://www.linkedin.com/in/suziekane/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  Connect on LinkedIn
+                </a>
+              </motion.div>
+            </div>
+          </div>
+        </footer>
+
+        {/* Floating Action Button (Mobile) */}
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5 }}
+          className="fixed bottom-6 right-6 md:hidden z-50"
         >
-          <Sparkles className="w-5 h-5" />
-          Get Started
-        </motion.a>
+          <motion.a
+            href="https://sociallysquare.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex items-center gap-2 bg-gradient-to-r from-[#3B82F6] to-[#2a4358] text-white px-6 py-4 rounded-full font-bold shadow-2xl"
+          >
+            <Sparkles className="w-5 h-5" />
+            Get Started
+          </motion.a>
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </>
   )
 }
