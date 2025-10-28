@@ -1,8 +1,21 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
+interface TestResults {
+  timestamp: string
+  environment: string | undefined
+  checks: {
+    envVars?: Record<string, boolean>
+    supabaseAdmin?: Record<string, unknown>
+    supabaseConnection?: Record<string, unknown>
+    nanoid?: Record<string, unknown>
+    analyzers?: Record<string, unknown>
+    security?: Record<string, unknown>
+  }
+}
+
 export async function GET() {
-  const results: Record<string, unknown> = {
+  const results: TestResults = {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
     checks: {}
