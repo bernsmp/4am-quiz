@@ -3,6 +3,7 @@
 
 import * as cheerio from 'cheerio'
 import type { AEOAnalyzerResult, AnalysisInput } from './types'
+import { generatePersonalizedSchema, type GeneratedSchema } from './schemaGenerator'
 
 interface SchemaDetails {
   hasSchema: boolean
@@ -15,6 +16,7 @@ interface SchemaDetails {
   hasProduct: boolean
   hasReview: boolean
   completenessScore: number
+  generatedSchemas?: GeneratedSchema
   [key: string]: unknown
 }
 
@@ -95,6 +97,10 @@ export async function analyzeSchema(input: AnalysisInput): Promise<AEOAnalyzerRe
 
     // Calculate final score
     const score = calculateSchemaScore(details)
+
+    // Generate personalized schemas for missing types
+    const generatedSchemas = await generatePersonalizedSchema(input, Array.from(schemaTypes))
+    details.generatedSchemas = generatedSchemas
 
     return {
       type: 'aeo',

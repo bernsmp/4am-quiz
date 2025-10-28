@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
         enableOpenAI: !!process.env.OPENAI_API_KEY, // Only if API key is set
         enablePageSpeed: true,
         enablePremium: false, // Keep premium analyzers off for now
-        timeout: 45000 // 45 second timeout
+        timeout: 75000 // 75 second timeout (PageSpeed needs ~60s)
       }
     )
 

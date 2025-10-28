@@ -27,6 +27,15 @@ import {
 } from 'lucide-react'
 import { DashboardHeader } from '@/components/ui/dashboard-header'
 
+interface GeneratedSchema {
+  organization?: Record<string, unknown>
+  localBusiness?: Record<string, unknown>
+  faqPage?: Record<string, unknown>
+  breadcrumbList?: Record<string, unknown>
+  recommendations: string[]
+  implementationCode: string
+}
+
 interface AnalysisDetails {
   schema?: {
     score?: number
@@ -35,6 +44,7 @@ interface AnalysisDetails {
       hasFAQ?: boolean
       hasLocalBusiness?: boolean
       schemaCount?: number
+      generatedSchemas?: GeneratedSchema
       [key: string]: unknown
     }
     enabled?: boolean
@@ -745,7 +755,36 @@ export default function DashboardPage() {
                 <h3 className="text-lg font-semibold text-gray-900">PageSpeed Performance</h3>
               </div>
 
-              {report.analysis_details?.pageSpeed?.details ? (
+              {report.analysis_details?.pageSpeed?.error ? (
+                <div className="text-center py-6">
+                  <div className="mb-4">
+                    <AlertCircle className="w-12 h-12 text-amber-500 mx-auto mb-3" />
+                    <p className="text-sm text-gray-600 mb-2">
+                      {typeof report.analysis_details.pageSpeed.error === 'string' &&
+                       (report.analysis_details.pageSpeed.error.includes('429') ||
+                        report.analysis_details.pageSpeed.error.includes('Quota') ||
+                        report.analysis_details.pageSpeed.error.includes('rate'))
+                        ? 'PageSpeed API rate limit reached'
+                        : 'PageSpeed analysis unavailable'}
+                    </p>
+                    <p className="text-xs text-gray-500 mb-4">
+                      {typeof report.analysis_details.pageSpeed.details === 'object' &&
+                       report.analysis_details.pageSpeed.details !== null &&
+                       'note' in report.analysis_details.pageSpeed.details
+                        ? String(report.analysis_details.pageSpeed.details.note)
+                        : 'Unable to fetch PageSpeed data'}
+                    </p>
+                    <a
+                      href="https://github.com/yourusername/your-repo/blob/main/PAGESPEED_SETUP.md"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium"
+                    >
+                      📖 Setup FREE API Key (2 minutes)
+                    </a>
+                  </div>
+                </div>
+              ) : report.analysis_details?.pageSpeed?.details ? (
                 <div className="space-y-4">
                   {/* Performance Score */}
                   <div>
@@ -945,6 +984,108 @@ export default function DashboardPage() {
             </motion.div>
           </div>
         </motion.div>
+
+        {/* Generated Schema Section */}
+        {report.analysis_details?.schema?.details?.generatedSchemas && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-16"
+          >
+            <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-8 border-2 border-purple-200 shadow-lg">
+              <div className="mb-6">
+                <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+                  <div className="p-2 bg-purple-500/20 rounded-lg">
+                    <Code2 className="w-7 h-7 text-purple-600" />
+                  </div>
+                  Your Personalized Schema Markup
+                </h2>
+                <p className="text-gray-600 ml-14">AI-generated schema markup tailored for your website</p>
+              </div>
+
+              {/* Recommendations */}
+              {report.analysis_details.schema.details.generatedSchemas.recommendations.length > 0 && (
+                <div className="mb-6 bg-white rounded-lg p-6 border border-purple-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                    <Lightbulb className="w-5 h-5 text-amber-500" />
+                    Recommendations
+                  </h3>
+                  <ul className="space-y-2">
+                    {report.analysis_details.schema.details.generatedSchemas.recommendations.map((rec: string, index: number) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">{rec}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Implementation Code */}
+              {report.analysis_details.schema.details.generatedSchemas.implementationCode && (
+                <div className="bg-gray-900 rounded-lg p-6 overflow-x-auto">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                      <Code2 className="w-5 h-5" />
+                      Ready-to-Use Code
+                    </h3>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(report.analysis_details?.schema?.details?.generatedSchemas?.implementationCode || '')
+                        // Could add a toast notification here
+                      }}
+                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+                    >
+                      Copy Code
+                    </button>
+                  </div>
+                  <pre className="text-sm text-green-400 overflow-x-auto">
+                    <code>{report.analysis_details.schema.details.generatedSchemas.implementationCode}</code>
+                  </pre>
+                </div>
+              )}
+
+              {/* Schema Types Generated */}
+              <div className="mt-6 grid md:grid-cols-3 gap-4">
+                {report.analysis_details.schema.details.generatedSchemas.organization && (
+                  <div className="bg-white rounded-lg p-4 border border-purple-200">
+                    <div className="flex items-center gap-2 text-purple-600 font-semibold mb-2">
+                      <CheckCircle2 className="w-5 h-5" />
+                      Organization Schema
+                    </div>
+                    <p className="text-sm text-gray-600">Establishes your brand identity</p>
+                  </div>
+                )}
+                {report.analysis_details.schema.details.generatedSchemas.localBusiness && (
+                  <div className="bg-white rounded-lg p-4 border border-purple-200">
+                    <div className="flex items-center gap-2 text-purple-600 font-semibold mb-2">
+                      <CheckCircle2 className="w-5 h-5" />
+                      LocalBusiness Schema
+                    </div>
+                    <p className="text-sm text-gray-600">Boosts local search visibility</p>
+                  </div>
+                )}
+                {report.analysis_details.schema.details.generatedSchemas.faqPage && (
+                  <div className="bg-white rounded-lg p-4 border border-purple-200">
+                    <div className="flex items-center gap-2 text-purple-600 font-semibold mb-2">
+                      <CheckCircle2 className="w-5 h-5" />
+                      FAQ Schema
+                    </div>
+                    <p className="text-sm text-gray-600">AI engines love Q&A format</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="text-sm text-blue-800">
+                  <strong>Need help implementing?</strong> Book a free strategy session and we&apos;ll help you install these schemas properly.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         {/* Interactive Roadmap */}
         <motion.div

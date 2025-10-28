@@ -36,19 +36,29 @@ export async function analyzePageSpeed(input: AnalysisInput): Promise<SEOAnalyze
       url.searchParams.append('key', apiKey)
     }
 
+    console.log('🔍 PageSpeed API: Analyzing', input.websiteUrl)
+
     const response = await fetch(url.toString(), {
-      signal: AbortSignal.timeout(30000) // 30 second timeout (PageSpeed can be slow)
+      signal: AbortSignal.timeout(60000) // 60 second timeout (PageSpeed can be very slow)
     })
 
     if (!response.ok) {
-      throw new Error(`PageSpeed API returned ${response.status}`)
+      const errorText = await response.text()
+      console.error('❌ PageSpeed API error:', response.status, errorText)
+      throw new Error(`PageSpeed API returned ${response.status}: ${errorText.substring(0, 200)}`)
     }
 
     const data = await response.json()
+    console.log('✅ PageSpeed API: Success for', input.websiteUrl)
 
     // Extract scores (0-1 scale, convert to 0-100)
     const lighthouseResult = data.lighthouseResult
     const categories = lighthouseResult?.categories || {}
+
+    if (!lighthouseResult) {
+      console.error('❌ PageSpeed API returned no lighthouseResult')
+      throw new Error('PageSpeed API returned no lighthouse data')
+    }
 
     const details: PageSpeedDetails = {
       performanceScore: Math.round((categories.performance?.score || 0) * 100),
@@ -65,6 +75,12 @@ export async function analyzePageSpeed(input: AnalysisInput): Promise<SEOAnalyze
       timeToInteractive: lighthouseResult?.audits?.['interactive']?.numericValue || 0,
     }
 
+    console.log('📊 PageSpeed scores:', {
+      performance: details.performanceScore,
+      seo: details.seoScore,
+      accessibility: details.accessibilityScore
+    })
+
     // Calculate overall SEO score based on PageSpeed metrics
     const score = calculatePageSpeedScore(details)
 
@@ -76,15 +92,26 @@ export async function analyzePageSpeed(input: AnalysisInput): Promise<SEOAnalyze
     }
   } catch (error) {
     // If PageSpeed API fails, return with error but don't crash the whole analysis
+    console.error('❌ PageSpeed analysis failed:', error)
+
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    const isTimeout = errorMessage.includes('aborted') || errorMessage.includes('timeout')
+
     return {
       type: 'seo',
       score: 0,
       details: {
-        error: error instanceof Error ? error.message : 'Unknown error',
-        note: 'PageSpeed Insights may be rate-limited or slow. Consider adding GOOGLE_PAGESPEED_API_KEY to .env'
+        error: errorMessage,
+        note: isTimeout
+          ? 'PageSpeed API timed out. The site may be slow or the API is overloaded. Try again in a few minutes.'
+          : 'PageSpeed Insights may be rate-limited. Consider adding GOOGLE_PAGESPEED_API_KEY to .env',
+        performanceScore: 0,
+        seoScore: 0,
+        accessibilityScore: 0,
+        bestPracticesScore: 0
       },
       enabled: true,
-      error: error instanceof Error ? error.message : 'PageSpeed analysis failed'
+      error: errorMessage
     }
   }
 }
