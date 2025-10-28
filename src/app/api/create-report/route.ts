@@ -102,6 +102,25 @@ export async function POST(request: NextRequest) {
     // Generate short report ID (8 characters)
     const reportId = nanoid(8)
 
+    // Sanitize analysis details for JSON storage (remove error objects, functions, etc.)
+    const sanitizedAnalysisDetails = JSON.parse(
+      JSON.stringify(analysisResult.rawResults, (key, value) => {
+        // Convert Error objects to plain objects
+        if (value instanceof Error) {
+          return {
+            error: value.message,
+            name: value.name,
+            stack: value.stack
+          }
+        }
+        // Skip functions
+        if (typeof value === 'function') {
+          return undefined
+        }
+        return value
+      })
+    )
+
     // Save to database
     const { data, error} = await supabaseAdmin
       .from('reports')
@@ -117,7 +136,7 @@ export async function POST(request: NextRequest) {
         total_gap: totalGap,
         gap_type: gapType,
         profile_type: profileType,
-        analysis_details: analysisResult.rawResults // Store detailed analysis data
+        analysis_details: sanitizedAnalysisDetails // Store sanitized analysis data
       })
       .select()
       .single()

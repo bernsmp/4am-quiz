@@ -45,13 +45,17 @@ function AnalyzingPageContent() {
     setIsCreatingReport(true)
 
     try {
+      // Parse scores, handling null/undefined/invalid values
+      const parsedSeoScore = quizSeoScore && quizSeoScore !== 'null' ? parseInt(quizSeoScore) : 50
+      const parsedAeoScore = quizAeoScore && quizAeoScore !== 'null' ? parseInt(quizAeoScore) : 50
+
       const response = await fetch('/api/create-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           websiteUrl: url,
-          quizSeoScore: parseInt(quizSeoScore || '0'),
-          quizAeoScore: parseInt(quizAeoScore || '0'),
+          quizSeoScore: isNaN(parsedSeoScore) ? 50 : parsedSeoScore,
+          quizAeoScore: isNaN(parsedAeoScore) ? 50 : parsedAeoScore,
           profileType: profileType
         })
       })
