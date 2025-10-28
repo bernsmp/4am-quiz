@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
 export async function GET() {
-  const results: any = {
+  const results: Record<string, unknown> = {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
     checks: {}
