@@ -103,23 +103,29 @@ export async function POST(request: NextRequest) {
     const reportId = nanoid(8)
 
     // Sanitize analysis details for JSON storage (remove error objects, functions, etc.)
-    const sanitizedAnalysisDetails = JSON.parse(
-      JSON.stringify(analysisResult.rawResults, (key, value) => {
-        // Convert Error objects to plain objects
-        if (value instanceof Error) {
-          return {
-            error: value.message,
-            name: value.name,
-            stack: value.stack
+    let sanitizedAnalysisDetails = null
+    try {
+      sanitizedAnalysisDetails = analysisResult.rawResults ? JSON.parse(
+        JSON.stringify(analysisResult.rawResults, (key, value) => {
+          // Convert Error objects to plain objects
+          if (value instanceof Error) {
+            return {
+              error: value.message,
+              name: value.name,
+              stack: value.stack
+            }
           }
-        }
-        // Skip functions
-        if (typeof value === 'function') {
-          return undefined
-        }
-        return value
-      })
-    )
+          // Skip functions
+          if (typeof value === 'function') {
+            return undefined
+          }
+          return value
+        })
+      ) : {}
+    } catch (sanitizeError) {
+      console.error('Error sanitizing analysis details:', sanitizeError)
+      sanitizedAnalysisDetails = { error: 'Failed to sanitize results' }
+    }
 
     // Save to database
     const { data, error} = await supabaseAdmin
