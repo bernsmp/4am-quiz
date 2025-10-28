@@ -5,8 +5,10 @@ import { analyzeWebsite } from '@/services/analyzers'
 import { createReportSchema, rateLimiter, RATE_LIMITS, getClientIp, validatePublicUrl } from '@/lib/security'
 
 export async function POST(request: NextRequest) {
+  console.log('=== CREATE REPORT API CALLED ===')
   try {
     // Rate limiting
+    console.log('Starting rate limit check...')
     const clientIp = getClientIp(request)
     const rateLimit = rateLimiter.check(
       `create-report:${clientIp}`,
@@ -63,6 +65,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Run REAL analysis using our analyzer system!
+    console.log('✓ Input validated successfully')
     console.log('Starting real analysis for:', websiteUrl)
 
     const analysisResult = await analyzeWebsite(
@@ -164,8 +167,15 @@ export async function POST(request: NextRequest) {
 
   } catch (error) {
     console.error('Server error:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    const errorStack = error instanceof Error ? error.stack : ''
+    console.error('Error details:', { message: errorMessage, stack: errorStack })
+
     return NextResponse.json(
-      { error: 'Internal server error' },
+      {
+        error: 'Internal server error',
+        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+      },
       { status: 500 }
     )
   }
