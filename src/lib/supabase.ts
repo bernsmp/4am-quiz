@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+// Clean all environment variables by removing newlines and extra whitespace
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/[\r\n\s]+/g, '') || ''
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.replace(/[\r\n\s]+/g, '') || ''
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
