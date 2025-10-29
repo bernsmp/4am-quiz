@@ -62,16 +62,20 @@ function AnalyzingPageContent() {
 
       const data = await response.json()
 
-      if (data.success) {
+      console.log('API Response:', data) // Debug log
+
+      if (data.success && data.partialGapUrl) {
+        console.log('Redirecting to:', data.partialGapUrl) // Debug log
         // Navigate to partial gap reveal page
         router.push(data.partialGapUrl)
       } else {
-        console.error('Failed to create report:', data.error)
+        console.error('Failed to create report:', data.error || 'Unknown error', data)
         // Fallback to old behavior if API fails
         router.push(`/verify`)
       }
     } catch (error) {
       console.error('Error creating report:', error)
+      console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace')
       router.push(`/verify`)
     }
   }
