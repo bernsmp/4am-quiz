@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useSearchParams, useRouter } from 'next/navigation'
-import Script from 'next/script'
 import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -1175,27 +1174,25 @@ export default function DashboardPage() {
           className="mb-16"
         >
           <div className="bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/40 shadow-lg">
-            <div className="text-center mb-6">
+            <div className="text-center">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">
                 Book Your Free Strategy Session
               </h2>
-              <p className="text-xl text-gray-600">
+              <p className="text-xl text-gray-600 mb-8">
                 Let&apos;s close your {report.total_gap}-point gap together
               </p>
-            </div>
 
-            <div className="max-w-4xl mx-auto bg-white rounded-lg p-4 border-2 border-[#86c444]/30">
-              <iframe
-                src="https://link.entrepreneurdreamplatform.com/widget/booking/2c4Zjv9T7Px0wdJv2c15"
-                style={{ width: '100%', border: 'none', overflow: 'hidden', minHeight: '600px' }}
-                scrolling="no"
-                id="phaU8a50FBCF4zBgkCsc_1761260259300"
-                title="Book Strategy Session Calendar"
-              />
-              <Script
-                src="https://link.entrepreneurdreamplatform.com/js/form_embed.js"
-                strategy="lazyOnload"
-              />
+              <motion.a
+                href="https://link.entrepreneurdreamplatform.com/widget/booking/2c4Zjv9T7Px0wdJv2c15"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-[#86c444] to-[#76b33d] text-white px-12 py-6 rounded-xl font-bold text-2xl hover:shadow-2xl transition-all duration-300 shadow-xl"
+              >
+                Book Your Strategy Session
+                <TrendingUp className="w-7 h-7" />
+              </motion.a>
             </div>
           </div>
         </motion.div>
