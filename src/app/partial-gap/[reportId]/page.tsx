@@ -32,8 +32,18 @@ export default function PartialGapPage() {
     const cleanedGhlUrl = process.env.NEXT_PUBLIC_GHL_CAPTURE_PAGE_URL?.replace(/[\r\n]+/g, '') || ''
     const cleanedAppUrl = process.env.NEXT_PUBLIC_APP_URL?.replace(/[\r\n]+/g, '') || ''
 
-    const baseUrl = cleanedGhlUrl || 'https://your-ghl-domain.com/aeo-quiz-capture'
-    const dashboardUrl = `${cleanedAppUrl || 'http://localhost:3000'}/dashboard/${reportId}`
+    // Production values as fallbacks
+    const baseUrl = cleanedGhlUrl || 'https://sociallysquare.com/aeo-quiz-capture-7422'
+    const dashboardUrl = `${cleanedAppUrl || 'https://4am-quiz.vercel.app'}/dashboard/${reportId}`
+
+    console.log('[GHL URL Debug]', {
+      envGhl: process.env.NEXT_PUBLIC_GHL_CAPTURE_PAGE_URL,
+      envApp: process.env.NEXT_PUBLIC_APP_URL,
+      cleanedGhlUrl,
+      cleanedAppUrl,
+      baseUrl,
+      dashboardUrl
+    })
 
     const params = new URLSearchParams({
       reportId: reportId,
