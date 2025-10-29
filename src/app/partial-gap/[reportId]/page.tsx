@@ -28,10 +28,12 @@ export default function PartialGapPage() {
 
   // Helper function to build GHL capture URL with all parameters
   function buildGHLCaptureUrl(reportData: Report) {
-    const baseUrl = process.env.NEXT_PUBLIC_GHL_CAPTURE_PAGE_URL ||
-      'https://your-ghl-domain.com/aeo-quiz-capture'
+    // Clean environment variables by removing newlines
+    const cleanedGhlUrl = process.env.NEXT_PUBLIC_GHL_CAPTURE_PAGE_URL?.replace(/[\r\n]+/g, '') || ''
+    const cleanedAppUrl = process.env.NEXT_PUBLIC_APP_URL?.replace(/[\r\n]+/g, '') || ''
 
-    const dashboardUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/dashboard/${reportId}`
+    const baseUrl = cleanedGhlUrl || 'https://your-ghl-domain.com/aeo-quiz-capture'
+    const dashboardUrl = `${cleanedAppUrl || 'http://localhost:3000'}/dashboard/${reportId}`
 
     const params = new URLSearchParams({
       reportId: reportId,
