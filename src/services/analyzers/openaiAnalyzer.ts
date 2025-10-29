@@ -20,7 +20,8 @@ interface OpenAIDetails {
 }
 
 export async function analyzeWithOpenAI(input: AnalysisInput): Promise<AEOAnalyzerResult> {
-  const apiKey = process.env.OPENAI_API_KEY
+  // Clean the API key by removing any newlines or extra whitespace
+  const apiKey = process.env.OPENAI_API_KEY?.replace(/[\r\n\s]+/g, '')
 
   if (!apiKey) {
     return {

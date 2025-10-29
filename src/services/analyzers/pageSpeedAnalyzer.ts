@@ -21,7 +21,8 @@ export async function analyzePageSpeed(input: AnalysisInput): Promise<SEOAnalyze
   try {
     // PageSpeed Insights API v5
     // Note: API key not required for basic usage, but recommended for production
-    const apiKey = process.env.GOOGLE_PAGESPEED_API_KEY || ''
+    // Clean the API key by removing any newlines or extra whitespace
+    const apiKey = process.env.GOOGLE_PAGESPEED_API_KEY?.replace(/[\r\n\s]+/g, '') || ''
     const strategy = 'mobile' // or 'desktop'
 
     const url = new URL('https://www.googleapis.com/pagespeedonline/v5/runPagespeed')
