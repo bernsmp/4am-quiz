@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #1a73e8;
+            border-bottom: 3px solid #1a73e8;
+            padding-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #1a73e8;
+            margin-top: 30px;
+            font-size: 22px;
+            border-bottom: 2px solid #e8eaed;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #5f6368;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .day-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        .day-box h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            margin-top: 0;
+        }
+        .task-box {
+            background: white;
+            color: #333;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 5px solid #1a73e8;
+        }
+        .task-box h4 {
+            margin-top: 0;
+            color: #1a73e8;
+        }
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+            color: #1a73e8;
+        }
+        .time-estimate {
+            background: #fff3e0;
+            color: #e65100;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .priority-high {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+        .priority-medium {
+            background: #fff3e0;
+            border-left-color: #ff9800;
+        }
+        .priority-low {
+            background: #e8f5e9;
+            border-left-color: #4caf50;
+        }
+        .success {
+            background: #e8f5e9;
+            padding: 15px;
+            border-left: 4px solid #4caf50;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-left: 4px solid #2196f3;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th {
+            background: #1a73e8;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            border: 1px solid #e8eaed;
+            padding: 10px;
+        }
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🚀 7-Day Implementation Plan</h1>
+<h2 style="color: #5f6368; border: none; margin-top: 10px;">The Motherhood Anthology - AEO &amp; AI Browser Optimization</h2>
+
+<div class="info">
+    <strong>📊 Quick Stats:</strong><br>
+    Total Time: 14-20 hours over 7 days<br>
+    Daily Commitment: 2-3 hours<br>
+    Expected ROI: 20-40% increase in organic visibility within 90 days
+</div>
+
+<div class="success">
+    <h3 style="margin-top: 0;">✨ What You'll Accomplish</h3>
+    <p>By the end of this week, your website will be fully optimized for Google, AI browsers (Perplexity, Arc, ChatGPT), and answer engines. You'll have all schemas in place, content structured properly, and technical foundations rock-solid.</p>
+</div>
+
+<hr>
+
+<!-- DAY 1 -->
+<div class="day-box">
+    <h2>📅 Day 1: Technical Foundation</h2>
+    <p><strong>Focus:</strong> Fix critical technical issues that block AI crawlers</p>
+    <div class="time-estimate">⏱ Time: 2 hours</div>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 1.1: Upload robots.txt</h4>
+    <div class="time-estimate">15 minutes</div>
+    <p><strong>Why:</strong> Tells AI crawlers (GPTBot, PerplexityBot, Claude-Web) they can access your site</p>
+    <ul class="checklist">
+        <li>Locate the <code>robots.txt</code> file in your project folder</li>
+        <li>Upload to your website root directory via FTP/cPanel</li>
+        <li>Verify it's accessible: <a href="https://themotherhoodanthology.com/robots.txt" target="_blank">themotherhoodanthology.com/robots.txt</a></li>
+        <li>Test: Visit the URL and confirm you see the content</li>
+    </ul>
+    <p><strong>File location:</strong> <code>robots.txt</code></p>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 1.2: Fix Broken Legal Footer Link</h4>
+    <div class="time-estimate">45 minutes</div>
+    <p><strong>Why:</strong> Broken links hurt SEO and user trust. Privacy/Terms need to be on your main domain.</p>
+    <ul class="checklist">
+        <li>Log into WordPress admin</li>
+        <li>Go to <strong>Pages → Add New</strong></li>
+        <li>Create new page titled "Privacy Policy" with slug <code>/privacy/</code></li>
+        <li>Copy content from <code>membership.themotherhoodanthology.com/pages/privacy-policy</code></li>
+        <li>Publish the Privacy page</li>
+        <li>Repeat for "Terms of Use" page with slug <code>/terms/</code></li>
+        <li>Edit your footer and update Legal link to point to <code>/privacy/</code></li>
+        <li>Add second link for <code>/terms/</code></li>
+        <li>Test both links - they should NOT return 404</li>
+    </ul>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 1.3: Verify Sitemap</h4>
+    <div class="time-estimate">15 minutes</div>
+    <p><strong>Why:</strong> Your sitemap helps search engines and AI crawlers find all your content</p>
+    <ul class="checklist">
+        <li>Check if sitemap exists: <a href="https://themotherhoodanthology.com/sitemap.xml" target="_blank">themotherhoodanthology.com/sitemap.xml</a></li>
+        <li>If not found, enable in your SEO plugin (Yoast or Rank Math)</li>
+        <li><strong>Yoast:</strong> SEO → General → Features → XML Sitemaps (toggle ON)</li>
+        <li><strong>Rank Math:</strong> Rank Math → Sitemap Settings (toggle ON)</li>
+        <li>Verify sitemap loads and shows your pages</li>
+    </ul>
+</div>
+
+<div class="task-box priority-medium">
+    <h4>Task 1.4: Submit Sitemap to Google Search Console</h4>
+    <div class="time-estimate">10 minutes</div>
+    <ul class="checklist">
+        <li>Log into <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a></li>
+        <li>Go to <strong>Sitemaps</strong> (left sidebar)</li>
+        <li>Enter: <code>sitemap.xml</code></li>
+        <li>Click <strong>Submit</strong></li>
+        <li>Status should show "Success" within a few minutes</li>
+    </ul>
+</div>
+
+<div class="success">
+    <h3>✅ Day 1 Complete When:</h3>
+    <ul>
+        <li>✓ robots.txt is live and accessible</li>
+        <li>✓ Footer Legal link goes to /privacy/ (no 404)</li>
+        <li>✓ Footer has link to /terms/</li>
+        <li>✓ Sitemap is enabled and submitted to Google</li>
+    </ul>
+</div>
+
+<hr>
+
+<!-- DAY 2 -->
+<div class="day-box">
+    <h2>📅 Day 2: Core Schema Implementation</h2>
+    <p><strong>Focus:</strong> Add structured data so AI can understand your content</p>
+    <div class="time-estimate">⏱ Time: 1.5 hours</div>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 2.1: Add Sitewide Schema</h4>
+    <div class="time-estimate">20 minutes</div>
+    <p><strong>Why:</strong> Tells search engines and AI what your organization is about</p>
+    <ul class="checklist">
+        <li>Open <code>comprehensive-schema.html</code> file</li>
+        <li>Copy everything between the <code>&lt;script type="application/ld+json"&gt;</code> tags</li>
+        <li>Go to WordPress → <strong>Appearance → Theme Editor</strong></li>
+        <li>OR use your SEO plugin's "Header Scripts" section (easier)</li>
+        <li><strong>Yoast:</strong> SEO → General → Webmaster Tools → Miscellaneous → Custom Code Header</li>
+        <li><strong>Rank Math:</strong> Rank Math → General Settings → Edit robots.txt → Add to Header</li>
+        <li>Paste the schema code</li>
+        <li>Save changes</li>
+    </ul>
+    <p><strong>File location:</strong> <code>comprehensive-schema.html</code></p>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 2.2: Validate Sitewide Schema</h4>
+    <div class="time-estimate">10 minutes</div>
+    <ul class="checklist">
+        <li>Go to <a href="https://search.google.com/test/rich-results" target="_blank">Google Rich Results Test</a></li>
+        <li>Enter your homepage URL: <code>themotherhoodanthology.com</code></li>
+        <li>Click <strong>Test URL</strong></li>
+        <li>Wait for results (30-60 seconds)</li>
+        <li>Check for <strong>0 errors</strong> - warnings are okay</li>
+        <li>You should see: Organization, WebSite, PodcastSeries schemas detected</li>
+    </ul>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 2.3: Create FAQ Page</h4>
+    <div class="time-estimate">30 minutes</div>
+    <p><strong>Why:</strong> FAQ pages with schema get featured in Google and AI answer engines</p>
+    <ul class="checklist">
+        <li>WordPress → <strong>Pages → Add New</strong></li>
+        <li>Title: "Frequently Asked Questions"</li>
+        <li>Switch to <strong>HTML/Text editor</strong> (not Visual editor)</li>
+        <li>Open <code>faq-schema.html</code> file</li>
+        <li>Copy the ENTIRE content</li>
+        <li>Paste into WordPress page editor</li>
+        <li>Preview to ensure FAQ accordion works</li>
+        <li>Publish the page</li>
+        <li>Add to your main navigation menu if desired</li>
+    </ul>
+    <p><strong>File location:</strong> <code>faq-schema.html</code></p>
+</div>
+
+<div class="task-box priority-medium">
+    <h4>Task 2.4: Validate FAQ Schema</h4>
+    <div class="time-estimate">10 minutes</div>
+    <ul class="checklist">
+        <li>Go to <a href="https://search.google.com/test/rich-results" target="_blank">Google Rich Results Test</a></li>
+        <li>Enter your FAQ page URL</li>
+        <li>Check for FAQPage schema with 15 questions</li>
+        <li>Verify 0 errors</li>
+        <li>Also test at <a href="https://validator.schema.org/" target="_blank">Schema.org Validator</a></li>
+    </ul>
+</div>
+
+<div class="success">
+    <h3>✅ Day 2 Complete When:</h3>
+    <ul>
+        <li>✓ Sitewide schema is live on all pages</li>
+        <li>✓ Homepage schema passes validation (0 errors)</li>
+        <li>✓ FAQ page is published</li>
+        <li>✓ FAQ schema passes validation with 15 questions</li>
+    </ul>
+</div>
+
+<hr>
+
+<!-- DAY 3 -->
+<div class="day-box">
+    <h2>📅 Day 3: Homepage Optimization</h2>
+    <p><strong>Focus:</strong> Make your homepage message crystal clear for humans and AI</p>
+    <div class="time-estimate">⏱ Time: 2 hours</div>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 3.1: Update Homepage H1</h4>
+    <div class="time-estimate">30 minutes</div>
+    <p><strong>Why:</strong> Clear H1 helps AI understand exactly who you serve and what you offer</p>
+
+    <p><strong>Current H1:</strong></p>
+    <p style="background: #ffebee; padding: 10px; border-left: 4px solid #f44336;">
+        "PHOTOGRAPHY EDUCATION / Ready to Level Up Your Photography Business?"
+    </p>
+
+    <p><strong>New H1 (copy this exactly):</strong></p>
+    <p style="background: #e8f5e9; padding: 10px; border-left: 4px solid #4caf50;">
+        "Photography Education That Helps Motherhood Photographers Build Profitable, Sustainable Businesses"
+    </p>
+
+    <ul class="checklist">
+        <li>WordPress → <strong>Pages → Edit Homepage</strong></li>
+        <li>Find the current H1 heading</li>
+        <li>Replace with the new text above</li>
+        <li>Update the subheading to: "Master your craft and grow your income with 250+ online classes, 15 expert mentors, and a supportive community of professional photographers."</li>
+        <li>Save and preview</li>
+    </ul>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 3.2: Audit All CTAs (Call-to-Action Buttons)</h4>
+    <div class="time-estimate">30 minutes</div>
+    <p><strong>Why:</strong> Generic CTAs confuse users and AI. Explicit labels improve conversions.</p>
+    <ul class="checklist">
+        <li>Browse your homepage and note every button/link</li>
+        <li>Create a list of all CTA text you find</li>
+        <li>Identify the top 10 most-clicked CTAs (check analytics if possible)</li>
+        <li>Prepare to update them in next task</li>
+    </ul>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 3.3: Update Top 5 CTAs</h4>
+    <div class="time-estimate">45 minutes</div>
+
+    <table>
+        <tr>
+            <th>Current (Generic)</th>
+            <th>New (Specific)</th>
+        </tr>
+        <tr>
+            <td>"Learn more"</td>
+            <td>"See TMA Membership Details"</td>
+        </tr>
+        <tr>
+            <td>"Join us"</td>
+            <td>"Join the TMA Community"</td>
+        </tr>
+        <tr>
+            <td>"Join the VIP Wait List!"</td>
+            <td>"Join the Membership Waitlist"</td>
+        </tr>
+        <tr>
+            <td>"Listen here"</td>
+            <td>"Listen on Apple Podcasts"</td>
+        </tr>
+        <tr>
+            <td>"Listen here" (Spotify)</td>
+            <td>"Listen on Spotify"</td>
+        </tr>
+    </table>
+
+    <ul class="checklist">
+        <li>Edit your homepage in WordPress</li>
+        <li>Find each CTA button</li>
+        <li>Update button text to be specific and action-oriented</li>
+        <li>Add <code>aria-label</code> attribute matching the button text (for accessibility)</li>
+        <li>Save changes</li>
+    </ul>
+
+    <p><strong>Example HTML:</strong></p>
+    <pre>&lt;a href="/membership" class="btn" aria-label="See TMA Membership Details"&gt;
+  See TMA Membership Details
+&lt;/a&gt;</pre>
+</div>
+
+<div class="success">
+    <h3>✅ Day 3 Complete When:</h3>
+    <ul>
+        <li>✓ Homepage H1 is clear and specific</li>
+        <li>✓ Hero subheading explains value proposition</li>
+        <li>✓ Top 5 CTAs have explicit, descriptive labels</li>
+        <li>✓ CTAs include aria-labels for accessibility</li>
+    </ul>
+</div>
+
+<hr>
+
+<!-- DAY 4-5 -->
+<div class="day-box">
+    <h2>📅 Days 4-5: Content Upgrades (Blog Posts)</h2>
+    <p><strong>Focus:</strong> Add metadata to blog posts so AI can quote and cite them</p>
+    <div class="time-estimate">⏱ Time: 4-5 hours total (2-2.5 hours each day)</div>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 4.1: Identify 10 Newest Blog Posts</h4>
+    <div class="time-estimate">15 minutes</div>
+    <ul class="checklist">
+        <li>WordPress → <strong>Posts → All Posts</strong></li>
+        <li>Sort by date (newest first)</li>
+        <li>Write down the titles of the 10 newest posts</li>
+        <li>Start with the Amy Porterfield post</li>
+    </ul>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 4.2: Update Blog Posts (Use Template)</h4>
+    <div class="time-estimate">25 minutes per post</div>
+    <p><strong>For EACH of the 10 posts, add:</strong></p>
+
+    <h4 style="color: #1a73e8;">1. Published Date (visible on page)</h4>
+    <pre>&lt;time datetime="2025-03-15"&gt;Published: March 15, 2025&lt;/time&gt;</pre>
+
+    <h4 style="color: #1a73e8;">2. Abstract (2-3 sentence summary)</h4>
+    <pre>&lt;div class="abstract"&gt;
+  &lt;p&gt;&lt;strong&gt;Summary:&lt;/strong&gt; Brief description of what readers
+  will learn from this article and why it matters.&lt;/p&gt;
+&lt;/div&gt;</pre>
+
+    <h4 style="color: #1a73e8;">3. Key Takeaways (5-8 bullets)</h4>
+    <pre>&lt;div class="key-takeaways"&gt;
+  &lt;h2&gt;Key Takeaways&lt;/h2&gt;
+  &lt;ul&gt;
+    &lt;li&gt;First actionable insight from the article&lt;/li&gt;
+    &lt;li&gt;Second important point readers should remember&lt;/li&gt;
+    &lt;li&gt;Third practical tip they can implement&lt;/li&gt;
+    &lt;!-- 5-8 total bullets --&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</pre>
+
+    <h4 style="color: #1a73e8;">4. Article Schema</h4>
+    <pre>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Your Article Title",
+  "datePublished": "2025-03-15",
+  "author": { "@type": "Person", "name": "Author Name" }
+}
+&lt;/script&gt;</pre>
+
+    <ul class="checklist">
+        <li>Open <code>blog-post-template.html</code> for reference</li>
+        <li>Edit each blog post in WordPress</li>
+        <li>Add the 4 elements above</li>
+        <li>Save and preview</li>
+        <li>Move to next post</li>
+    </ul>
+
+    <p><strong>File location:</strong> <code>blog-post-template.html</code></p>
+</div>
+
+<div class="task-box priority-medium">
+    <h4>Task 4.3: Validate Article Schema</h4>
+    <div class="time-estimate">5 minutes per post</div>
+    <ul class="checklist">
+        <li>Test updated posts at <a href="https://search.google.com/test/rich-results" target="_blank">Google Rich Results Test</a></li>
+        <li>Verify Article schema appears</li>
+        <li>Check for 0 errors</li>
+    </ul>
+</div>
+
+<div class="info">
+    <strong>💡 Pro Tip:</strong> Do 5 posts on Day 4, and 5 posts on Day 5. Don't try to rush through all 10 in one sitting - quality matters more than speed.
+</div>
+
+<div class="success">
+    <h3>✅ Days 4-5 Complete When:</h3>
+    <ul>
+        <li>✓ 10 blog posts have visible published dates</li>
+        <li>✓ Each has a 2-3 sentence abstract</li>
+        <li>✓ Each has 5-8 key takeaway bullets</li>
+        <li>✓ Article schema is added and validated</li>
+        <li>✓ All schemas pass with 0 errors</li>
+    </ul>
+</div>
+
+<hr>
+
+<!-- DAY 6 -->
+<div class="day-box">
+    <h2>📅 Day 6: Podcast Episodes & Event Page</h2>
+    <p><strong>Focus:</strong> Optimize podcast episodes and The Gathering page</p>
+    <div class="time-estimate">⏱ Time: 3 hours</div>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 6.1: Update Podcast Main Page</h4>
+    <div class="time-estimate">20 minutes</div>
+
+    <p><strong>Update H1 to:</strong></p>
+    <p style="background: #e8f5e9; padding: 10px; border-left: 4px solid #4caf50;">
+        "Motherhood Photography Podcast — Weekly Business Lessons &amp; Stories"
+    </p>
+
+    <ul class="checklist">
+        <li>Go to your podcast main page</li>
+        <li>Update the H1 heading</li>
+        <li>Find all "Listen here" buttons</li>
+        <li>Change to "Listen on Apple Podcasts" and "Listen on Spotify"</li>
+        <li>Add aria-labels to buttons</li>
+        <li>Save changes</li>
+    </ul>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 6.2: Update 5 Newest Podcast Episodes</h4>
+    <div class="time-estimate">20 minutes per episode</div>
+    <p><strong>For EACH of 5 episodes, add:</strong></p>
+
+    <ul class="checklist">
+        <li>Published date + duration</li>
+        <li>2-3 sentence abstract ("In this episode...")</li>
+        <li>5-8 key takeaways</li>
+        <li>Episode highlights with timestamps</li>
+        <li>PodcastEpisode schema</li>
+        <li>Update listen buttons to be explicit</li>
+    </ul>
+
+    <p><strong>Use template:</strong> <code>podcast-episode-schema-template.html</code></p>
+</div>
+
+<div class="task-box priority-medium">
+    <h4>Task 6.3: Update The Gathering Page</h4>
+    <div class="time-estimate">30 minutes</div>
+    <p><strong>Why:</strong> Event schema helps AI answer questions about your retreats</p>
+
+    <ul class="checklist">
+        <li>Go to The Gathering page</li>
+        <li>Add clear text for:
+            <ul>
+                <li>Dates: March 1-4, 2026</li>
+                <li>Location: Kaiya Beach Resort, Alys Beach, FL</li>
+                <li>Status: SOLD OUT</li>
+            </ul>
+        </li>
+        <li>Add "What Attendees Experienced" section with 6 bullets</li>
+        <li>Add refund policy as text</li>
+        <li>Add Event schema from <code>event-schema-the-gathering.html</code></li>
+        <li>Validate schema</li>
+    </ul>
+
+    <p><strong>File location:</strong> <code>event-schema-the-gathering.html</code></p>
+</div>
+
+<div class="success">
+    <h3>✅ Day 6 Complete When:</h3>
+    <ul>
+        <li>✓ Podcast main page H1 is updated</li>
+        <li>✓ Podcast listen buttons are explicit</li>
+        <li>✓ 5 episodes have full metadata + schema</li>
+        <li>✓ The Gathering has Event schema + text details</li>
+        <li>✓ All schemas validate with 0 errors</li>
+    </ul>
+</div>
+
+<hr>
+
+<!-- DAY 7 -->
+<div class="day-box">
+    <h2>📅 Day 7: Validation &amp; Testing</h2>
+    <p><strong>Focus:</strong> Verify everything works and test in AI browsers</p>
+    <div class="time-estimate">⏱ Time: 2 hours</div>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 7.1: Full Schema Validation</h4>
+    <div class="time-estimate">30 minutes</div>
+    <p><strong>Test these pages at <a href="https://search.google.com/test/rich-results" target="_blank">Google Rich Results Test</a>:</strong></p>
+    <ul class="checklist">
+        <li>Homepage (Organization, WebSite, PodcastSeries)</li>
+        <li>FAQ page (FAQPage with 15 questions)</li>
+        <li>3 sample blog posts (Article schema)</li>
+        <li>3 sample podcast episodes (PodcastEpisode schema)</li>
+        <li>The Gathering page (Event schema)</li>
+    </ul>
+
+    <p><strong>Goal:</strong> All pages pass with <strong>0 errors</strong>. Warnings are usually okay.</p>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 7.2: Technical Checks</h4>
+    <div class="time-estimate">15 minutes</div>
+    <ul class="checklist">
+        <li>Verify robots.txt loads: <a href="https://themotherhoodanthology.com/robots.txt" target="_blank">themotherhoodanthology.com/robots.txt</a></li>
+        <li>Verify sitemap loads: <a href="https://themotherhoodanthology.com/sitemap.xml" target="_blank">themotherhoodanthology.com/sitemap.xml</a></li>
+        <li>Test footer Legal links (should NOT be 404)</li>
+        <li>Check that /privacy/ page loads</li>
+        <li>Check that /terms/ page loads</li>
+    </ul>
+</div>
+
+<div class="task-box priority-high">
+    <h4>Task 7.3: Request Indexing in Google Search Console</h4>
+    <div class="time-estimate">15 minutes</div>
+    <ul class="checklist">
+        <li>Log into <a href="https://search.google.com/search-console" target="_blank">Google Search Console</a></li>
+        <li>Request indexing for:
+            <ul>
+                <li>Homepage</li>
+                <li>FAQ page</li>
+                <li>5 newest blog posts</li>
+                <li>5 newest podcast episodes</li>
+                <li>The Gathering page</li>
+            </ul>
+        </li>
+        <li>Go to <strong>URL Inspection</strong> tool</li>
+        <li>Enter each URL and click <strong>"Request Indexing"</strong></li>
+    </ul>
+</div>
+
+<div class="task-box priority-medium">
+    <h4>Task 7.4: Test in AI Browsers</h4>
+    <div class="time-estimate">30 minutes</div>
+
+    <h4 style="color: #1a73e8;">Test in Perplexity</h4>
+    <ul class="checklist">
+        <li>Go to <a href="https://perplexity.ai" target="_blank">perplexity.ai</a></li>
+        <li>Search: "What is The Motherhood Anthology?"</li>
+        <li>Search: "The Motherhood Anthology photography classes"</li>
+        <li>Search: "Motherhood Photography Podcast"</li>
+        <li>Verify your content is cited and information is accurate</li>
+    </ul>
+
+    <h4 style="color: #1a73e8;">Test in ChatGPT (if you have Plus)</h4>
+    <ul class="checklist">
+        <li>Go to <a href="https://chat.openai.com" target="_blank">chat.openai.com</a></li>
+        <li>Ask: "What does The Motherhood Anthology offer?"</li>
+        <li>Ask: "Find recent episodes of The Motherhood Anthology Podcast"</li>
+        <li>Verify information is accurate</li>
+    </ul>
+
+    <h4 style="color: #1a73e8;">Test in Arc Browser (if available)</h4>
+    <ul class="checklist">
+        <li>Open Arc browser</li>
+        <li>Use "Browse for Me" feature</li>
+        <li>Search: "photography education for motherhood photographers"</li>
+        <li>Verify your site appears and is summarized correctly</li>
+    </ul>
+</div>
+
+<div class="task-box priority-low">
+    <h4>Task 7.5: Set Up Monitoring</h4>
+    <div class="time-estimate">20 minutes</div>
+    <ul class="checklist">
+        <li>Google Search Console: Check for schema errors weekly</li>
+        <li>Bookmark validation tools for quick access</li>
+        <li>Set calendar reminder for 2 weeks: Check for rich snippets appearing</li>
+        <li>Set calendar reminder for monthly AI browser testing</li>
+    </ul>
+</div>
+
+<div class="success">
+    <h3>🎉 Day 7 Complete - You're Done!</h3>
+    <ul>
+        <li>✓ All schemas validated with 0 errors</li>
+        <li>✓ Technical foundation is solid</li>
+        <li>✓ Pages requested for indexing</li>
+        <li>✓ Tested in AI browsers</li>
+        <li>✓ Monitoring is set up</li>
+    </ul>
+</div>
+
+<hr>
+
+<h2>📊 Progress Tracker</h2>
+
+<table>
+    <tr>
+        <th style="width: 15%;">Day</th>
+        <th style="width: 30%;">Focus Area</th>
+        <th style="width: 15%;">Time</th>
+        <th style="width: 40%;">Status</th>
+    </tr>
+    <tr>
+        <td><strong>Day 1</strong></td>
+        <td>Technical Foundation</td>
+        <td>2 hours</td>
+        <td>☐ Not Started / ⏳ In Progress / ✅ Complete</td>
+    </tr>
+    <tr>
+        <td><strong>Day 2</strong></td>
+        <td>Core Schema</td>
+        <td>1.5 hours</td>
+        <td>☐ Not Started / ⏳ In Progress / ✅ Complete</td>
+    </tr>
+    <tr>
+        <td><strong>Day 3</strong></td>
+        <td>Homepage Optimization</td>
+        <td>2 hours</td>
+        <td>☐ Not Started / ⏳ In Progress / ✅ Complete</td>
+    </tr>
+    <tr>
+        <td><strong>Day 4</strong></td>
+        <td>Blog Posts (5 posts)</td>
+        <td>2.5 hours</td>
+        <td>☐ Not Started / ⏳ In Progress / ✅ Complete</td>
+    </tr>
+    <tr>
+        <td><strong>Day 5</strong></td>
+        <td>Blog Posts (5 more)</td>
+        <td>2.5 hours</td>
+        <td>☐ Not Started / ⏳ In Progress / ✅ Complete</td>
+    </tr>
+    <tr>
+        <td><strong>Day 6</strong></td>
+        <td>Podcast & Event</td>
+        <td>3 hours</td>
+        <td>☐ Not Started / ⏳ In Progress / ✅ Complete</td>
+    </tr>
+    <tr>
+        <td><strong>Day 7</strong></td>
+        <td>Validation & Testing</td>
+        <td>2 hours</td>
+        <td>☐ Not Started / ⏳ In Progress / ✅ Complete</td>
+    </tr>
+</table>
+
+<hr>
+
+<h2>🆘 Troubleshooting</h2>
+
+<h3>Schema Validation Errors</h3>
+<p><strong>Problem:</strong> "Missing required field"</p>
+<p><strong>Solution:</strong> Double-check you copied the complete schema. Missing commas or brackets cause this.</p>
+
+<p><strong>Problem:</strong> "Invalid date format"</p>
+<p><strong>Solution:</strong> Dates must be in format: <code>YYYY-MM-DD</code> or <code>YYYY-MM-DDT00:00:00-06:00</code></p>
+
+<h3>Schema Not Showing in Test</h3>
+<p><strong>Problem:</strong> Rich Results Test shows no schema</p>
+<p><strong>Solution:</strong> Check that you added schema to the &lt;head&gt; section, not the body. View page source and search for "application/ld+json"</p>
+
+<h3>FAQ Accordion Not Working</h3>
+<p><strong>Problem:</strong> FAQ items don't expand/collapse</p>
+<p><strong>Solution:</strong> Make sure you copied the ENTIRE faq-schema.html file including the JavaScript at the bottom</p>
+
+<h3>Can't Upload robots.txt</h3>
+<p><strong>Problem:</strong> File upload blocked or overwritten</p>
+<p><strong>Solution:</strong> Some hosts require FTP access. Contact your hosting provider or use cPanel File Manager.</p>
+
+<hr>
+
+<h2>🎯 Quick Reference: Files You Need</h2>
+
+<table>
+    <tr>
+        <th>When</th>
+        <th>File Needed</th>
+        <th>Use For</th>
+    </tr>
+    <tr>
+        <td>Day 1</td>
+        <td><code>robots.txt</code></td>
+        <td>Upload to site root</td>
+    </tr>
+    <tr>
+        <td>Day 2</td>
+        <td><code>comprehensive-schema.html</code></td>
+        <td>Sitewide schema</td>
+    </tr>
+    <tr>
+        <td>Day 2</td>
+        <td><code>faq-schema.html</code></td>
+        <td>FAQ page creation</td>
+    </tr>
+    <tr>
+        <td>Days 4-5</td>
+        <td><code>blog-post-template.html</code></td>
+        <td>Reference for blog updates</td>
+    </tr>
+    <tr>
+        <td>Day 6</td>
+        <td><code>podcast-episode-schema-template.html</code></td>
+        <td>Reference for episode updates</td>
+    </tr>
+    <tr>
+        <td>Day 6</td>
+        <td><code>event-schema-the-gathering.html</code></td>
+        <td>The Gathering page schema</td>
+    </tr>
+</table>
+
+<hr>
+
+<div class="success">
+    <h2>🚀 Ready to Get Started?</h2>
+    <p><strong>Start with Day 1 now!</strong> Each day builds on the previous, so follow the order. By Day 7, your website will be fully optimized for AI browsers and answer engines.</p>
+
+    <p><strong>Remember:</strong> This is a marathon, not a sprint. Take breaks, ask for help if needed, and celebrate each completed day. You've got this! 💪</p>
+</div>
+
+</body>
+</html>

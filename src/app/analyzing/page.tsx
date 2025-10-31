@@ -49,7 +49,15 @@ function AnalyzingPageContent() {
       const parsedSeoScore = quizSeoScore && quizSeoScore !== 'null' ? parseInt(quizSeoScore) : 50
       const parsedAeoScore = quizAeoScore && quizAeoScore !== 'null' ? parseInt(quizAeoScore) : 50
 
-      const response = await fetch('/api/create-report', {
+      // Use absolute URL to ensure API call goes to the correct domain
+      // This fixes the issue where quiz is on 4am-quiz.vercel.app but API is on 4am-test.vercel.app
+      const apiUrl = process.env.NEXT_PUBLIC_APP_URL
+        ? `${process.env.NEXT_PUBLIC_APP_URL}/api/create-report`
+        : '/api/create-report' // Fallback to relative URL for local dev
+
+      console.log('Creating report via API:', apiUrl)
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -66,17 +74,31 @@ function AnalyzingPageContent() {
 
       if (data.success && data.partialGapUrl) {
         console.log('Redirecting to:', data.partialGapUrl) // Debug log
-        // Navigate to partial gap reveal page
-        router.push(data.partialGapUrl)
+
+        // Build the full URL for the redirect to ensure we navigate to the correct domain
+        const redirectUrl = process.env.NEXT_PUBLIC_APP_URL
+          ? `${process.env.NEXT_PUBLIC_APP_URL}${data.partialGapUrl}`
+          : data.partialGapUrl
+
+        console.log('Full redirect URL:', redirectUrl)
+
+        // Use window.location for cross-domain redirect instead of router.push
+        window.location.href = redirectUrl
       } else {
         console.error('Failed to create report:', data.error || 'Unknown error', data)
         // Fallback to old behavior if API fails
-        router.push(`/verify`)
+        const fallbackUrl = process.env.NEXT_PUBLIC_APP_URL
+          ? `${process.env.NEXT_PUBLIC_APP_URL}/verify`
+          : '/verify'
+        window.location.href = fallbackUrl
       }
     } catch (error) {
       console.error('Error creating report:', error)
       console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace')
-      router.push(`/verify`)
+      const fallbackUrl = process.env.NEXT_PUBLIC_APP_URL
+        ? `${process.env.NEXT_PUBLIC_APP_URL}/verify`
+        : '/verify'
+      window.location.href = fallbackUrl
     }
   }
 

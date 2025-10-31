@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEO Analysis Dashboard - The Motherhood Anthology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        .url-box {
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-family: monospace;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .score-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .score-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .score-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .score-label {
+            color: #718096;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .excellent { color: #48bb78; }
+        .good { color: #4299e1; }
+        .warning { color: #ed8936; }
+        .poor { color: #f56565; }
+
+        .analysis-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .analysis-section h2 {
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .metric {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid transparent;
+        }
+
+        .metric.pass { border-left-color: #48bb78; }
+        .metric.warning { border-left-color: #ed8936; }
+        .metric.fail { border-left-color: #f56565; }
+
+        .metric-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .metric-content {
+            flex: 1;
+        }
+
+        .metric-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-description {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .recommendations {
+            background: #fffaf0;
+            border-left: 4px solid #ed8936;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .recommendations h3 {
+            color: #ed8936;
+            margin-bottom: 1rem;
+        }
+
+        .recommendations ul {
+            list-style-position: inside;
+            color: #744210;
+        }
+
+        .recommendations li {
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .detail-card {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .detail-card h4 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag.found { background: #c6f6d5; color: #22543d; }
+        .tag.missing { background: #fed7d7; color: #742a2a; }
+
+        .timestamp {
+            text-align: center;
+            color: white;
+            margin-top: 2rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AEO Analysis Dashboard</h1>
+            <p>Answer Engine Optimization Report</p>
+            <div class="url-box">https://themotherhoodanthology.com/</div>
+        </div>
+
+        <div class="score-overview">
+            <div class="score-card">
+                <div class="score-label">Overall AEO Score</div>
+                <div class="score-value good">72/100</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 72%"></div>
+                </div>
+            </div>
+            <div class="score-card">
+                <div class="score-label">Structured Data</div>
+                <div class="score-value excellent">95/100</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 95%"></div>
+                </div>
+            </div>
+            <div class="score-card">
+                <div class="score-label">Content Quality</div>
+                <div class="score-value good">75/100</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+            </div>
+            <div class="score-card">
+                <div class="score-label">Accessibility</div>
+                <div class="score-value warning">55/100</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 55%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Structured Data Analysis</h2>
+
+            <div class="metric pass">
+                <div class="metric-icon">✓</div>
+                <div class="metric-content">
+                    <div class="metric-title">Schema.org Markup Present</div>
+                    <div class="metric-description">Organization, WebSite, Article, and Person schemas detected</div>
+                </div>
+            </div>
+
+            <div class="metric pass">
+                <div class="metric-icon">✓</div>
+                <div class="metric-content">
+                    <div class="metric-title">Organization Schema</div>
+                    <div class="metric-description">Includes logo and social media profiles (Facebook, Instagram)</div>
+                </div>
+            </div>
+
+            <div class="metric pass">
+                <div class="metric-icon">✓</div>
+                <div class="metric-content">
+                    <div class="metric-title">WebSite Schema with Search Action</div>
+                    <div class="metric-description">Enables site search in answer engines</div>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <h4>Detected Schemas</h4>
+                    <span class="tag found">Organization</span>
+                    <span class="tag found">WebSite</span>
+                    <span class="tag found">Article</span>
+                    <span class="tag found">Person</span>
+                    <span class="tag missing">FAQPage</span>
+                    <span class="tag missing">Course</span>
+                </div>
+                <div class="detail-card">
+                    <h4>Social Profiles</h4>
+                    <span class="tag found">Facebook</span>
+                    <span class="tag found">Instagram</span>
+                    <span class="tag missing">LinkedIn</span>
+                    <span class="tag missing">YouTube</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Content Structure & Quality</h2>
+
+            <div class="metric pass">
+                <div class="metric-icon">✓</div>
+                <div class="metric-content">
+                    <div class="metric-title">Clear Heading Hierarchy</div>
+                    <div class="metric-description">Proper H1, H2, H3 structure detected</div>
+                </div>
+            </div>
+
+            <div class="metric pass">
+                <div class="metric-icon">✓</div>
+                <div class="metric-content">
+                    <div class="metric-title">Strong Value Proposition</div>
+                    <div class="metric-description">250+ classes, 15 mentors - clear, quantified offerings</div>
+                </div>
+            </div>
+
+            <div class="metric warning">
+                <div class="metric-icon">⚠</div>
+                <div class="metric-content">
+                    <div class="metric-title">No FAQ Section</div>
+                    <div class="metric-description">Missing Q&A content optimized for answer engines</div>
+                </div>
+            </div>
+
+            <div class="metric warning">
+                <div class="metric-icon">⚠</div>
+                <div class="metric-content">
+                    <div class="metric-title">Limited Featured Snippet Content</div>
+                    <div class="metric-description">Few numbered lists, tables, or step-by-step guides</div>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <h4>Key Content Topics</h4>
+                    <p style="color: #4a5568; line-height: 1.6;">
+                        • Portrait photography education<br>
+                        • Business building for photographers<br>
+                        • Online learning platform<br>
+                        • Expert mentorship<br>
+                        • Community-focused learning<br>
+                        • Newborn & motherhood photography
+                    </p>
+                </div>
+                <div class="detail-card">
+                    <h4>Page Metadata</h4>
+                    <p style="color: #4a5568; line-height: 1.6;">
+                        <strong>Title:</strong> Photography Education : The Motherhood Anthology<br><br>
+                        <strong>Description:</strong> Photography Education for portrait photographers. Build a profitable business you love with 250+ online classes, 15 expert mentors & community support.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Answer Engine Readiness</h2>
+
+            <div class="metric pass">
+                <div class="metric-icon">✓</div>
+                <div class="metric-content">
+                    <div class="metric-title">Clear Brand Identity</div>
+                    <div class="metric-description">Strong positioning as photography education platform</div>
+                </div>
+            </div>
+
+            <div class="metric pass">
+                <div class="metric-icon">✓</div>
+                <div class="metric-content">
+                    <div class="metric-title">Updated Content</div>
+                    <div class="metric-description">Last modified March 14, 2025 - fresh content signals</div>
+                </div>
+            </div>
+
+            <div class="metric fail">
+                <div class="metric-icon">✗</div>
+                <div class="metric-content">
+                    <div class="metric-title">Image Alt Text Missing</div>
+                    <div class="metric-description">Inconsistent or missing alt text reduces accessibility and AEO</div>
+                </div>
+            </div>
+
+            <div class="metric warning">
+                <div class="metric-icon">⚠</div>
+                <div class="metric-content">
+                    <div class="metric-title">Contact Information Incomplete</div>
+                    <div class="metric-description">Social links present, but missing direct contact details</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Priority Recommendations</h2>
+
+            <div class="recommendations">
+                <h3>High Priority (Quick Wins)</h3>
+                <ul>
+                    <li><strong>Add FAQ Schema:</strong> Create a dedicated FAQ page with FAQPage schema markup addressing common photography education questions</li>
+                    <li><strong>Implement Course Schema:</strong> Mark up the 250+ classes with Course schema to appear in education-related searches</li>
+                    <li><strong>Fix Image Alt Text:</strong> Add descriptive alt text to all images for accessibility and image search optimization</li>
+                    <li><strong>Add HowTo Content:</strong> Create step-by-step guides with HowTo schema for photography techniques</li>
+                </ul>
+            </div>
+
+            <div class="recommendations" style="background: #f0fff4; border-left-color: #48bb78; margin-top: 1rem;">
+                <h3 style="color: #22543d;">Medium Priority (Content Expansion)</h3>
+                <ul style="color: #22543d;">
+                    <li><strong>Topic Clusters:</strong> Build content hubs around core topics (newborn photography, business strategy, pricing)</li>
+                    <li><strong>Expert Credentials:</strong> Add detailed bios with credentials for the 15 mentors to enhance E-E-A-T signals</li>
+                    <li><strong>Reviews & Testimonials:</strong> Implement Review schema for testimonials to appear in rich snippets</li>
+                    <li><strong>Video Content:</strong> Mark up video content with VideoObject schema if available</li>
+                </ul>
+            </div>
+
+            <div class="recommendations" style="background: #ebf8ff; border-left-color: #4299e1; margin-top: 1rem;">
+                <h3 style="color: #2c5282;">Long-term Strategy</h3>
+                <ul style="color: #2c5282;">
+                    <li><strong>Answer Engine Optimization Content:</strong> Create conversational content that directly answers common queries</li>
+                    <li><strong>Local Business Schema:</strong> If applicable, add local business markup for in-person services</li>
+                    <li><strong>Event Schema:</strong> Mark up workshops, webinars, or live training sessions</li>
+                    <li><strong>Breadcrumbs:</strong> Implement breadcrumb navigation with BreadcrumbList schema</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <h2>Competitive Advantages</h2>
+
+            <div class="detail-grid">
+                <div class="detail-card" style="background: #c6f6d5;">
+                    <h4>Strengths</h4>
+                    <p style="color: #22543d; line-height: 1.8;">
+                        ✓ Comprehensive schema implementation<br>
+                        ✓ Clear, quantified value proposition<br>
+                        ✓ Well-structured content hierarchy<br>
+                        ✓ Active social media presence<br>
+                        ✓ Regular content updates
+                    </p>
+                </div>
+                <div class="detail-card" style="background: #fed7d7;">
+                    <h4>Opportunities</h4>
+                    <p style="color: #742a2a; line-height: 1.8;">
+                        ✗ No FAQ content<br>
+                        ✗ Missing Course schema<br>
+                        ✗ Incomplete image accessibility<br>
+                        ✗ Limited featured snippet content<br>
+                        ✗ No video schema markup
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="timestamp">
+            Analysis generated on October 28, 2025
+        </div>
+    </div>
+</body>
+</html>
