@@ -368,37 +368,23 @@ export default function Home() {
       {/* Footer */}
       <div className="bg-[#2b4257] px-6 py-12">
         <div className="container mx-auto max-w-4xl text-center">
-          <div className="mb-6">
+          {/* Socially Square Branding */}
+          <div className="mb-4">
             <Image
-              src="/AEO Logo - 3.jpg"
-              alt="AEO Strategist"
-              width={250}
-              height={100}
+              src="/ss-logo-light.png"
+              alt="Socially Square"
+              width={180}
+              height={72}
               className="mx-auto"
             />
           </div>
-          <p className="text-[#86c543] text-2xl font-bold tracking-wider mb-6">Right Angles for Marketing Success</p>
-
-          {/* Socially Square Branding */}
-          <div className="mt-8 pt-8 border-t border-white/10">
-            <p className="text-[#e3ebf2] text-lg mb-4">An offshoot of</p>
-            <div className="mb-4">
-              <Image
-                src="/ss-logo-light.png"
-                alt="Socially Square"
-                width={180}
-                height={72}
-                className="mx-auto"
-              />
-            </div>
-            <div className="flex justify-center gap-6 text-sm text-[#e3ebf2]">
-              <a href="https://sociallysquare.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                Visit Our Website
-              </a>
-              <a href="https://www.linkedin.com/in/suziekane/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                Connect on LinkedIn
-              </a>
-            </div>
+          <div className="flex justify-center gap-6 text-sm text-[#e3ebf2]">
+            <a href="https://sociallysquare.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              Visit Our Website
+            </a>
+            <a href="https://www.linkedin.com/in/suziekane/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              Connect on LinkedIn
+            </a>
           </div>
         </div>
       </div>
