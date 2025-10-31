@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -115,6 +116,15 @@ export default function QuizPage() {
       ...prev,
       [questionId]: answer
     }));
+
+    // Auto-advance to next question after 500ms delay
+    setTimeout(() => {
+      if (currentQuestion < quizQuestions.length - 1) {
+        setCurrentQuestion(prev => prev + 1);
+      } else {
+        setShowResults(true);
+      }
+    }, 500);
   };
 
   const handleNext = () => {
@@ -255,6 +265,16 @@ export default function QuizPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       <div className="container mx-auto px-6 py-20 md:py-24">
+        {/* Back Button - Always Visible */}
+        <button
+          onClick={handlePrevious}
+          disabled={currentQuestion === 0}
+          className="mb-6 flex items-center text-gray-600 hover:text-gray-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <ArrowLeft className="w-5 h-5 mr-2" />
+          Back to Previous Question
+        </button>
+
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/">
@@ -305,19 +325,8 @@ export default function QuizPage() {
                 </Button>
               ))}
 
-              <div className="flex justify-between pt-8 gap-4">
-                <ShimmerButton
-                  onClick={handlePrevious}
-                  disabled={currentQuestion === 0}
-                  className="px-10 py-4 text-lg font-semibold border-2 border-[#88a9c3] shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-                  shimmerColor="#6da7cc"
-                  background="rgba(255, 255, 255, 0.98)"
-                  borderRadius="10px"
-                >
-                  <span className="text-[#2b4257]">
-                    Previous
-                  </span>
-                </ShimmerButton>
+              {/* Optional manual next button (since we have auto-advance) */}
+              <div className="flex justify-end pt-8">
                 <ShimmerButton
                   onClick={handleNext}
                   disabled={!selectedAnswer}
@@ -327,7 +336,7 @@ export default function QuizPage() {
                   borderRadius="10px"
                 >
                   <span className="text-white">
-                    {currentQuestion === quizQuestions.length - 1 ? "View Results" : "Next Question"}
+                    {currentQuestion === quizQuestions.length - 1 ? "View Results Now" : "Skip to Next →"}
                   </span>
                 </ShimmerButton>
               </div>

@@ -25,6 +25,9 @@ export async function analyzePageSpeed(input: AnalysisInput): Promise<SEOAnalyze
     const apiKey = process.env.GOOGLE_PAGESPEED_API_KEY?.replace(/[\r\n\s]+/g, '') || ''
     const strategy = 'mobile' // or 'desktop'
 
+    // Debug: Log API key presence (not the actual key for security)
+    console.log('PageSpeed API Key present:', !!apiKey, apiKey ? `(${apiKey.length} chars)` : '(not configured)')
+
     const url = new URL('https://www.googleapis.com/pagespeedonline/v5/runPagespeed')
     url.searchParams.append('url', input.websiteUrl)
     url.searchParams.append('strategy', strategy)
@@ -98,14 +101,28 @@ export async function analyzePageSpeed(input: AnalysisInput): Promise<SEOAnalyze
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     const isTimeout = errorMessage.includes('aborted') || errorMessage.includes('timeout')
 
+    // Check if we have an API key
+    const hasApiKey = !!process.env.GOOGLE_PAGESPEED_API_KEY?.replace(/[\r\n\s]+/g, '')
+
+    // Provide more accurate error messages
+    let note = 'Unable to fetch PageSpeed data'
+    if (isTimeout) {
+      note = 'PageSpeed API timed out. The site may be slow or the API is overloaded. Try again in a few minutes.'
+    } else if (errorMessage.includes('429') || errorMessage.includes('Quota')) {
+      note = hasApiKey
+        ? 'PageSpeed API rate limit reached. Please try again later.'
+        : 'PageSpeed API rate limit reached. Add a FREE API key to increase limits (see documentation).'
+    } else if (!hasApiKey) {
+      note = 'Consider adding a FREE GOOGLE_PAGESPEED_API_KEY to .env for better reliability.'
+    }
+
     return {
       type: 'seo',
       score: 0,
       details: {
         error: errorMessage,
-        note: isTimeout
-          ? 'PageSpeed API timed out. The site may be slow or the API is overloaded. Try again in a few minutes.'
-          : 'PageSpeed Insights may be rate-limited. Consider adding GOOGLE_PAGESPEED_API_KEY to .env',
+        note: note,
+        hasApiKey: hasApiKey,
         performanceScore: 0,
         seoScore: 0,
         accessibilityScore: 0,

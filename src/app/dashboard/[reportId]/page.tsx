@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { supabase } from '@/lib/supabase'
 import { motion, AnimatePresence } from 'framer-motion'
 import CountUp from 'react-countup'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts'
 import {
   AlertCircle,
   TrendingUp,
@@ -22,9 +22,11 @@ import {
   Gauge,
   FileText,
   Check,
-  X
+  X,
+  Info
 } from 'lucide-react'
 import { DashboardHeader } from '@/components/ui/dashboard-header'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface GeneratedSchema {
   organization?: Record<string, unknown>
@@ -332,7 +334,7 @@ export default function DashboardPage() {
   ]
 
   return (
-    <>
+    <TooltipProvider>
       <DashboardHeader />
       <motion.div
         initial={{ opacity: 0 }}
@@ -451,12 +453,30 @@ export default function DashboardPage() {
                   <Eye className="w-6 h-6 text-blue-600" />
                 </div>
                 Traditional Search (SEO)
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="w-4 h-4 text-gray-400" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Where people find you on Google and traditional search engines today</p>
+                  </TooltipContent>
+                </Tooltip>
               </h3>
 
               <div className="space-y-6">
                 {/* Prediction */}
                 <div>
-                  <div className="text-xs font-semibold text-blue-600 mb-2 uppercase tracking-wide">Your Prediction</div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide">Your Prediction</span>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="w-3 h-3 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>What percentage you estimated your visibility comes from this channel</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <div className="text-4xl font-bold text-blue-600 mb-3">
                     {report.quiz_seo_score}%
                   </div>
@@ -473,7 +493,17 @@ export default function DashboardPage() {
 
                 {/* Reality */}
                 <div>
-                  <div className="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">Reality</div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Reality</span>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="w-3 h-3 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>What our analysis measured as your actual visibility in this channel</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <div className="text-4xl font-bold text-gray-900 mb-3">
                     {report.actual_seo_score}%
                   </div>
@@ -490,7 +520,17 @@ export default function DashboardPage() {
 
                 {/* Gap */}
                 <div className="text-center bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-300/30 rounded-xl p-4 mt-6">
-                  <div className="text-xs font-semibold text-red-700 mb-1 uppercase tracking-wide">SEO Gap</div>
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <span className="text-xs font-semibold text-red-700 uppercase tracking-wide">SEO Gap</span>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="w-3 h-3 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>The difference between your prediction and reality. A larger gap means bigger blind spots in your search strategy.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <div className="text-5xl font-bold text-red-600">
                     {report.seo_gap}
                   </div>
@@ -512,12 +552,30 @@ export default function DashboardPage() {
                   <Brain className="w-6 h-6 text-green-600" />
                 </div>
                 AI Search (AEO)
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="w-4 h-4 text-gray-400" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Where people find you through ChatGPT, Perplexity, and AI-powered search</p>
+                  </TooltipContent>
+                </Tooltip>
               </h3>
 
               <div className="space-y-6">
                 {/* Prediction */}
                 <div>
-                  <div className="text-xs font-semibold text-green-600 mb-2 uppercase tracking-wide">Your Prediction</div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-semibold text-green-600 uppercase tracking-wide">Your Prediction</span>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="w-3 h-3 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>What percentage you estimated your visibility comes from this channel</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <div className="text-4xl font-bold text-green-600 mb-3">
                     {report.quiz_aeo_score}%
                   </div>
@@ -534,7 +592,17 @@ export default function DashboardPage() {
 
                 {/* Reality */}
                 <div>
-                  <div className="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">Reality</div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">Reality</span>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="w-3 h-3 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>What our analysis measured as your actual visibility in this channel</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <div className="text-4xl font-bold text-gray-900 mb-3">
                     {report.actual_aeo_score}%
                   </div>
@@ -551,7 +619,17 @@ export default function DashboardPage() {
 
                 {/* Gap */}
                 <div className="text-center bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-300/30 rounded-xl p-4 mt-6">
-                  <div className="text-xs font-semibold text-red-700 mb-1 uppercase tracking-wide">AEO Gap</div>
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <span className="text-xs font-semibold text-red-700 uppercase tracking-wide">AEO Gap</span>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="w-3 h-3 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent className="max-w-xs">
+                        <p>The difference between your prediction and reality. A larger gap means bigger blind spots in your AI search strategy.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <div className="text-5xl font-bold text-red-600">
                     {report.aeo_gap}
                   </div>
@@ -584,7 +662,7 @@ export default function DashboardPage() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                   <XAxis dataKey="name" stroke="#6B7280" />
                   <YAxis stroke="#6B7280" domain={[0, 100]} />
-                  <Tooltip
+                  <RechartsTooltip
                     contentStyle={{
                       backgroundColor: 'rgba(255, 255, 255, 0.95)',
                       border: '1px solid #E5E7EB',
@@ -597,6 +675,55 @@ export default function DashboardPage() {
                   <Bar dataKey="Reality" fill="#EF4444" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* What This Means Summary Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <div className="p-6 bg-blue-50 rounded-lg border border-blue-200">
+            <h3 className="text-xl font-semibold mb-4">What This Means For Your Business</h3>
+
+            <div className="space-y-4">
+              <div>
+                <p className="font-medium">Your SEO Gap: {report.seo_gap} points</p>
+                <p className="text-gray-700">
+                  {report.seo_gap > 50
+                    ? "You're significantly overestimating traditional search impact. This blind spot may be costing you traffic opportunities."
+                    : report.seo_gap > 20
+                    ? "There's a moderate gap between perception and reality in your SEO understanding."
+                    : "You have good awareness of your traditional search presence."
+                  }
+                </p>
+              </div>
+
+              <div>
+                <p className="font-medium">Your AEO Gap: {report.aeo_gap} points</p>
+                <p className="text-gray-700">
+                  {report.aeo_gap > 50
+                    ? "Major opportunity: AI search visibility is very different from your expectations."
+                    : report.aeo_gap > 20
+                    ? "Some adjustments needed in your AI search strategy."
+                    : "You accurately understand your AI search visibility."
+                  }
+                </p>
+              </div>
+
+              <div className="mt-6 p-4 bg-white rounded border-l-4 border-blue-500">
+                <p className="font-semibold text-lg">Bottom Line:</p>
+                <p className="text-gray-800">
+                  {report.seo_gap > report.aeo_gap
+                    ? "Focus on improving traditional search - that's your biggest blind spot."
+                    : "Prioritize AI search optimization - that's where your biggest opportunity lies."
+                  }
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -662,7 +789,7 @@ export default function DashboardPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Card 1: Schema Markup */}
+            {/* Card 1: AI-Readable Format */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -675,12 +802,13 @@ export default function DashboardPage() {
                 <div className="p-3 bg-purple-500/10 rounded-lg">
                   <Code2 className="w-6 h-6 text-purple-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">Schema Markup</h3>
+                <h3 className="text-lg font-semibold text-gray-900">AI-Readable Format</h3>
+                <p className="text-xs text-gray-500">How well AI engines can understand your content structure</p>
               </div>
 
               <div className="space-y-3 mb-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Organization Schema</span>
+                  <span className="text-sm text-gray-600">Organization Info</span>
                   {report.analysis_details?.schema?.details?.hasOrganization ? (
                     <div className="flex items-center gap-1 text-green-600">
                       <Check className="w-4 h-4" />
@@ -695,7 +823,7 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">FAQ Schema</span>
+                  <span className="text-sm text-gray-600">FAQ Section</span>
                   {report.analysis_details?.schema?.details?.hasFAQ ? (
                     <div className="flex items-center gap-1 text-green-600">
                       <Check className="w-4 h-4" />
@@ -710,7 +838,7 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">LocalBusiness Schema</span>
+                  <span className="text-sm text-gray-600">Local Business Info</span>
                   {report.analysis_details?.schema?.details?.hasLocalBusiness ? (
                     <div className="flex items-center gap-1 text-green-600">
                       <Check className="w-4 h-4" />
@@ -729,7 +857,7 @@ export default function DashboardPage() {
                 <div className="text-sm text-gray-600">
                   {report.analysis_details?.schema ? (
                     <span className="font-medium">
-                      {report.analysis_details.schema.details?.schemaCount || 0} schema{(report.analysis_details.schema.details?.schemaCount || 0) === 1 ? '' : 's'} detected
+                      {report.analysis_details.schema.details?.schemaCount || 0} AI format{(report.analysis_details.schema.details?.schemaCount || 0) === 1 ? '' : 's'} detected
                     </span>
                   ) : (
                     <span className="text-amber-600">Analysis in progress...</span>
@@ -738,7 +866,7 @@ export default function DashboardPage() {
               </div>
             </motion.div>
 
-            {/* Card 2: PageSpeed Performance */}
+            {/* Card 2: Website Speed Score */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -751,7 +879,8 @@ export default function DashboardPage() {
                 <div className="p-3 bg-blue-500/10 rounded-lg">
                   <Gauge className="w-6 h-6 text-blue-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">PageSpeed Performance</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Website Speed Score</h3>
+                <p className="text-xs text-gray-500">How fast your site loads for visitors</p>
               </div>
 
               {report.analysis_details?.pageSpeed?.error ? (
@@ -763,8 +892,8 @@ export default function DashboardPage() {
                        (report.analysis_details.pageSpeed.error.includes('429') ||
                         report.analysis_details.pageSpeed.error.includes('Quota') ||
                         report.analysis_details.pageSpeed.error.includes('rate'))
-                        ? 'PageSpeed API rate limit reached'
-                        : 'PageSpeed analysis unavailable'}
+                        ? 'Website Speed Score temporarily unavailable'
+                        : 'Website Speed Score analysis unavailable'}
                     </p>
                     <p className="text-xs text-gray-500 mb-4">
                       {typeof report.analysis_details.pageSpeed.details === 'object' &&
@@ -773,14 +902,20 @@ export default function DashboardPage() {
                         ? String(report.analysis_details.pageSpeed.details.note)
                         : 'Unable to fetch PageSpeed data'}
                     </p>
-                    <a
-                      href="https://github.com/yourusername/your-repo/blob/main/PAGESPEED_SETUP.md"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium"
-                    >
-                      📖 Setup FREE API Key (2 minutes)
-                    </a>
+                    {/* Only show setup link if API key is NOT configured */}
+                    {typeof report.analysis_details.pageSpeed.details === 'object' &&
+                     report.analysis_details.pageSpeed.details !== null &&
+                     'hasApiKey' in report.analysis_details.pageSpeed.details &&
+                     !report.analysis_details.pageSpeed.details.hasApiKey && (
+                      <a
+                        href="/PAGESPEED_SETUP.md"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-medium"
+                      >
+                        📖 Setup FREE API Key (2 minutes)
+                      </a>
+                    )}
                   </div>
                 </div>
               ) : report.analysis_details?.pageSpeed?.details ? (
@@ -864,7 +999,7 @@ export default function DashboardPage() {
               )}
             </motion.div>
 
-            {/* Card 3: Content Quality */}
+            {/* Card 3: Information Structure */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -877,7 +1012,8 @@ export default function DashboardPage() {
                 <div className="p-3 bg-green-500/10 rounded-lg">
                   <FileText className="w-6 h-6 text-green-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">Content Quality</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Information Structure</h3>
+                <p className="text-xs text-gray-500">How your website content is organized for search engines</p>
               </div>
 
               {report.analysis_details?.content?.details ? (
@@ -920,7 +1056,7 @@ export default function DashboardPage() {
               )}
             </motion.div>
 
-            {/* Card 4: AI Visibility */}
+            {/* Card 4: Brand Recognition Setup */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -933,7 +1069,8 @@ export default function DashboardPage() {
                 <div className="p-3 bg-amber-500/10 rounded-lg">
                   <Sparkles className="w-6 h-6 text-amber-600" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">AI Visibility</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Brand Recognition Setup</h3>
+                <p className="text-xs text-gray-500">How clearly your expertise is defined for AI search</p>
               </div>
 
               {report.analysis_details?.openai?.details ? (
@@ -984,107 +1121,9 @@ export default function DashboardPage() {
           </div>
         </motion.div>
 
-        {/* Generated Schema Section */}
-        {report.analysis_details?.schema?.details?.generatedSchemas && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-16"
-          >
-            <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-8 border-2 border-purple-200 shadow-lg">
-              <div className="mb-6">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-                  <div className="p-2 bg-purple-500/20 rounded-lg">
-                    <Code2 className="w-7 h-7 text-purple-600" />
-                  </div>
-                  Your Personalized Schema Markup
-                </h2>
-                <p className="text-gray-600 ml-14">AI-generated schema markup tailored for your website</p>
-              </div>
-
-              {/* Recommendations */}
-              {report.analysis_details.schema.details.generatedSchemas.recommendations.length > 0 && (
-                <div className="mb-6 bg-white rounded-lg p-6 border border-purple-200">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Lightbulb className="w-5 h-5 text-amber-500" />
-                    Recommendations
-                  </h3>
-                  <ul className="space-y-2">
-                    {report.analysis_details.schema.details.generatedSchemas.recommendations.map((rec: string, index: number) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{rec}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Implementation Code */}
-              {report.analysis_details.schema.details.generatedSchemas.implementationCode && (
-                <div className="bg-gray-900 rounded-lg p-6 overflow-x-auto">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                      <Code2 className="w-5 h-5" />
-                      Ready-to-Use Code
-                    </h3>
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(report.analysis_details?.schema?.details?.generatedSchemas?.implementationCode || '')
-                        // Could add a toast notification here
-                      }}
-                      className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-colors duration-200"
-                    >
-                      Copy Code
-                    </button>
-                  </div>
-                  <pre className="text-sm text-green-400 overflow-x-auto">
-                    <code>{report.analysis_details.schema.details.generatedSchemas.implementationCode}</code>
-                  </pre>
-                </div>
-              )}
-
-              {/* Schema Types Generated */}
-              <div className="mt-6 grid md:grid-cols-3 gap-4">
-                {report.analysis_details.schema.details.generatedSchemas.organization && (
-                  <div className="bg-white rounded-lg p-4 border border-purple-200">
-                    <div className="flex items-center gap-2 text-purple-600 font-semibold mb-2">
-                      <CheckCircle2 className="w-5 h-5" />
-                      Organization Schema
-                    </div>
-                    <p className="text-sm text-gray-600">Establishes your brand identity</p>
-                  </div>
-                )}
-                {report.analysis_details.schema.details.generatedSchemas.localBusiness && (
-                  <div className="bg-white rounded-lg p-4 border border-purple-200">
-                    <div className="flex items-center gap-2 text-purple-600 font-semibold mb-2">
-                      <CheckCircle2 className="w-5 h-5" />
-                      LocalBusiness Schema
-                    </div>
-                    <p className="text-sm text-gray-600">Boosts local search visibility</p>
-                  </div>
-                )}
-                {report.analysis_details.schema.details.generatedSchemas.faqPage && (
-                  <div className="bg-white rounded-lg p-4 border border-purple-200">
-                    <div className="flex items-center gap-2 text-purple-600 font-semibold mb-2">
-                      <CheckCircle2 className="w-5 h-5" />
-                      FAQ Schema
-                    </div>
-                    <p className="text-sm text-gray-600">AI engines love Q&A format</p>
-                  </div>
-                )}
-              </div>
-
-              <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-sm text-blue-800">
-                  <strong>Need help implementing?</strong> Book a free strategy session and we&apos;ll help you install these schemas properly.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
+        {/* Generated Schema Section - Hidden from users */}
+        {/* NOTE: Schema analysis still runs in the backend, but we don't display the code to users */}
+        {/* Users will receive their personalized schema code during the strategy call */}
 
         {/* Interactive Roadmap */}
         <motion.div
@@ -1165,7 +1204,7 @@ export default function DashboardPage() {
           </div>
         </motion.div>
 
-        {/* Calendar Booking Section */}
+        {/* Updated CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1173,27 +1212,48 @@ export default function DashboardPage() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <div className="bg-white/70 backdrop-blur-lg rounded-xl p-8 border border-white/40 shadow-lg">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Book Your Free Strategy Session
-              </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                Let&apos;s close your {report.total_gap}-point gap together
-              </p>
+          <div className="p-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl text-white shadow-xl">
+            <h2 className="text-3xl font-bold mb-3">Ready to Close Your Search Gaps?</h2>
+            <p className="text-xl mb-6 text-blue-100">
+              Schedule your free strategy call to get your personalized optimization roadmap
+            </p>
 
-              <motion.a
-                href="https://link.entrepreneurdreamplatform.com/widget/booking/2c4Zjv9T7Px0wdJv2c15"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-[#86c444] to-[#76b33d] text-white px-12 py-6 rounded-xl font-bold text-2xl hover:shadow-2xl transition-all duration-300 shadow-xl"
-              >
-                Book Your Strategy Session
-                <TrendingUp className="w-7 h-7" />
-              </motion.a>
+            <div className="bg-white/10 backdrop-blur rounded-lg p-6 mb-6">
+              <h3 className="text-xl font-semibold mb-4">On This Call You&apos;ll Receive:</h3>
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <CheckCircle2 className="w-6 h-6 mr-3 flex-shrink-0 text-green-300" />
+                  <span><strong>Custom Implementation Roadmap</strong> - Step-by-step plan tailored to your business</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle2 className="w-6 h-6 mr-3 flex-shrink-0 text-green-300" />
+                  <span><strong>Your Personalized Schema Code</strong> - AI-readable format customized for your site</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle2 className="w-6 h-6 mr-3 flex-shrink-0 text-green-300" />
+                  <span><strong>Priority Fix Recommendations</strong> - What to tackle first for maximum impact</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle2 className="w-6 h-6 mr-3 flex-shrink-0 text-green-300" />
+                  <span><strong>90-Day Optimization Plan</strong> - Clear timeline to boost your visibility</span>
+                </li>
+              </ul>
             </div>
+
+            <motion.a
+              href="https://link.entrepreneurdreamplatform.com/widget/booking/2c4Zjv9T7Px0wdJv2c15"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full md:w-auto inline-flex justify-center items-center gap-2 px-8 py-4 bg-white text-blue-700 rounded-lg font-bold text-lg hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              Schedule Your Free Strategy Call →
+            </motion.a>
+
+            <p className="text-sm mt-4 text-blue-100">
+              No commitment required • Typical ROI: 3-5x within 90 days
+            </p>
           </div>
         </motion.div>
 
@@ -1305,6 +1365,6 @@ export default function DashboardPage() {
           </motion.a>
         </motion.div>
       </motion.div>
-    </>
+    </TooltipProvider>
   )
 }
