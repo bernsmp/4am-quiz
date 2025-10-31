@@ -180,10 +180,10 @@ export default function QuizPage() {
           <div className="text-center mb-8">
             <Link href="/">
               <Image
-                src="/AEO Logo white.png"
-                alt="AEO Strategist"
-                width={300}
-                height={120}
+                src="/ss-logo-light.png"
+                alt="Socially Square"
+                width={180}
+                height={72}
                 className="mx-auto cursor-pointer"
               />
             </Link>
@@ -279,10 +279,10 @@ export default function QuizPage() {
         <div className="text-center mb-8">
           <Link href="/">
             <Image
-              src="/AEO Logo white.png"
-              alt="AEO Strategist"
-              width={300}
-              height={120}
+              src="/ss-logo-light.png"
+              alt="Socially Square"
+              width={180}
+              height={72}
               className="mx-auto cursor-pointer"
             />
           </Link>
